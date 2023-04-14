@@ -16,5 +16,10 @@ namespace GerenciamentoClientes
         {
             InitializeComponent();
         }
+
+        private void InitializeComponent()
+        {
+
+        }
     }
 }
