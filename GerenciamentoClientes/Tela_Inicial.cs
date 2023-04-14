@@ -56,6 +56,7 @@ namespace GerenciamentoClientes
             Btn_Novo.TabIndex = 2;
             Btn_Novo.Text = "Novo";
             Btn_Novo.UseVisualStyleBackColor = true;
+            Btn_Novo.Click += Btn_Novo_Click;
             // 
             // Btn_Editar
             // 
@@ -93,6 +94,11 @@ namespace GerenciamentoClientes
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Btn_Novo_Click(object sender, EventArgs e)
         {
 
         }
