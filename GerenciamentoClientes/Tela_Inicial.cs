@@ -19,7 +19,13 @@ namespace GerenciamentoClientes
 
         private void InitializeComponent()
         {
-
+            SuspendLayout();
+            // 
+            // Tela_Inicial
+            // 
+            ClientSize = new Size(599, 415);
+            Name = "Tela_Inicial";
+            ResumeLayout(false);
         }
     }
 }
