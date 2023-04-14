@@ -24,7 +24,13 @@ namespace GerenciamentoClientes
 
         private void InitializeComponent()
         {
-
+            SuspendLayout();
+            // 
+            // Tela_Cadastro
+            // 
+            ClientSize = new Size(398, 303);
+            Name = "Tela_Cadastro";
+            ResumeLayout(false);
         }
     }
 }
