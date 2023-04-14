@@ -8,23 +8,23 @@
     "net7.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Usuario\\.nuget\\packages\\": {},
+    "C:\\Users\\uservb\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Usuario\\Documents\\CodersGrowth\\GerenciamentoClientes\\GerenciamentoClientes.csproj",
+      "projectUniqueName": "C:\\Users\\uservb\\Documents\\a\\CodersGrowth\\GerenciamentoClientes\\GerenciamentoClientes.csproj",
       "projectName": "GerenciamentoClientes",
-      "projectPath": "C:\\Users\\Usuario\\Documents\\CodersGrowth\\GerenciamentoClientes\\GerenciamentoClientes.csproj",
-      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Usuario\\Documents\\CodersGrowth\\GerenciamentoClientes\\obj\\",
+      "projectPath": "C:\\Users\\uservb\\Documents\\a\\CodersGrowth\\GerenciamentoClientes\\GerenciamentoClientes.csproj",
+      "packagesPath": "C:\\Users\\uservb\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\uservb\\Documents\\a\\CodersGrowth\\GerenciamentoClientes\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\uservb\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -33,7 +33,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
