@@ -12,14 +12,27 @@ namespace GerenciamentoClientes
 {
     public partial class Tela_Cad : Form
     {
+        public Pessoa pessoa { get; set; }
         public Tela_Cad()
         {
             InitializeComponent();
+            if (pessoa == null)
+            {
+                pessoa = new Pessoa();
+            }
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+        private void Btn_Salvar_Click(object sender, EventArgs e)
+        {
+            pessoa.Nome = Txt_Nome.Text;
+            pessoa.Email = Txt_Email.Text;
+            pessoa.Cpf = Txt_Cpf.Text;
+            pessoa.Data_nascimento = Txt_DataNasc.Text;
+            DialogResult = DialogResult.OK;
         }
     }
 }

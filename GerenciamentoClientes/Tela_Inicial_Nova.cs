@@ -10,15 +10,27 @@ using System.Windows.Forms;
 
 namespace GerenciamentoClientes
 {
+
     public partial class Tela_Inicial_Nova : Form
     {
         public Tela_Inicial_Nova()
         {
             InitializeComponent();
+
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            List<Pessoa> pessoas = new List<Pessoa>();
+
+            var tela_cad = new Tela_Cad();
+            var resultado = tela_cad.ShowDialog(null);
+                if (resultado == DialogResult.OK)
+                {
+                    pessoas.Add(tela_cad.pessoa);
+                }
+            dataGridView1.DataSource = null;
+            dataGridView1.DataSource = pessoas;
 
         }
 
