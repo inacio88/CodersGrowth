@@ -13,6 +13,7 @@ namespace GerenciamentoClientes
 
     public partial class Tela_Inicial_Nova : Form
     {
+        List<Pessoa> pessoas = new List<Pessoa>();
         public Tela_Inicial_Nova()
         {
             InitializeComponent();
@@ -21,7 +22,7 @@ namespace GerenciamentoClientes
 
         private void button1_Click(object sender, EventArgs e)
         {
-            List<Pessoa> pessoas = new List<Pessoa>();
+            
 
             var tela_cad = new Tela_Cad();
             var resultado = tela_cad.ShowDialog(null);
