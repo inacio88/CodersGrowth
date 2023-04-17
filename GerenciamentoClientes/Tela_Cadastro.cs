@@ -22,7 +22,7 @@ namespace GerenciamentoClientes
             }
         }
 
-       
+
         private void AoClicarEmSalvar(object sender, EventArgs e)
         {
             pessoa.Id = Pessoa.GerarId();
@@ -31,6 +31,19 @@ namespace GerenciamentoClientes
             pessoa.Cpf = Txt_Cpf.Text;
             pessoa.DataNascimento = Txt_DataNasc.Text;
             DialogResult = DialogResult.OK;
+        }
+
+        private void AoClicarEmCancelar(object sender, EventArgs e)
+        {
+            string message = "Se fechar os dados preenchidos serão pedidos. Tem certeza?";
+            string title = "Tem certeza?";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            DialogResult result = MessageBox.Show(message, title, buttons);
+            if (result == DialogResult.Yes)
+            {
+                DialogResult = DialogResult.Cancel;
+            }
+            
         }
     }
 }
