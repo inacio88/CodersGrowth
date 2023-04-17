@@ -28,10 +28,11 @@ namespace GerenciamentoClientes
         }
         private void Btn_Salvar_Click(object sender, EventArgs e)
         {
+            pessoa.Id = Pessoa.GerarId();
             pessoa.Nome = Txt_Nome.Text;
             pessoa.Email = Txt_Email.Text;
             pessoa.Cpf = Txt_Cpf.Text;
-            pessoa.Data_nascimento = Txt_DataNasc.Text;
+            pessoa.DataNascimento = Txt_DataNasc.Text;
             DialogResult = DialogResult.OK;
         }
     }
