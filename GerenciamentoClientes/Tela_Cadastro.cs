@@ -42,7 +42,6 @@ namespace GerenciamentoClientes
             if (result == DialogResult.Yes)
             {
                 DialogResult = DialogResult.Cancel;
-
             }
             
         }
