@@ -2,11 +2,19 @@
 {
     public class Pessoa
     {
+        public static int RefenciaId = 0;
+        public static int GerarId()
+        {
+            Pessoa.RefenciaId = Pessoa.RefenciaId + 1;
+            return Pessoa.RefenciaId;
+        }
+        
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
-        public DateTime Data_nascimento { get; set; }
-        public int Cpf { get; set; }
+        public string DataNascimento { get; set; }
+        public string Cpf { get; set; }
 
     }
+
 }

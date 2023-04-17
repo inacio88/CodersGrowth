@@ -12,25 +12,25 @@ namespace GerenciamentoClientes
 {
     public partial class Tela_Cadastro : Form
     {
+        public Pessoa pessoa { get; set; }
         public Tela_Cadastro()
         {
             InitializeComponent();
+            if (pessoa == null)
+            {
+                pessoa = new Pessoa();
+            }
         }
 
-        private void Lbl_Data_Nasc_Click(object sender, EventArgs e)
+       
+        private void AoClicarEmSalvar(object sender, EventArgs e)
         {
-
-        }
-
-        private void InitializeComponent()
-        {
-            SuspendLayout();
-            // 
-            // Tela_Cadastro
-            // 
-            ClientSize = new Size(398, 303);
-            Name = "Tela_Cadastro";
-            ResumeLayout(false);
+            pessoa.Id = Pessoa.GerarId();
+            pessoa.Nome = Txt_Nome.Text;
+            pessoa.Email = Txt_Email.Text;
+            pessoa.Cpf = Txt_Cpf.Text;
+            pessoa.DataNascimento = Txt_DataNasc.Text;
+            DialogResult = DialogResult.OK;
         }
     }
 }
