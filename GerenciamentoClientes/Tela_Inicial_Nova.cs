@@ -24,7 +24,7 @@ namespace GerenciamentoClientes
         {
             
 
-            var tela_cad = new Tela_Cad();
+            var tela_cad = new Tela_Cadastro();
             var resultado = tela_cad.ShowDialog(null);
                 if (resultado == DialogResult.OK)
                 {
