@@ -35,7 +35,16 @@ namespace GerenciamentoClientes
 
         private void AoClicarEmCancelar(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
+            string message = "Se fechar os dados preenchidos serão pedidos. Tem certeza?";
+            string title = "Tem certeza?";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+            DialogResult result = MessageBox.Show(message, title, buttons);
+            if (result == DialogResult.Yes)
+            {
+                DialogResult = DialogResult.Cancel;
+                //this.Close();
+            }
+            
         }
     }
 }
