@@ -11,10 +11,10 @@ using System.Windows.Forms;
 namespace GerenciamentoClientes
 {
 
-    public partial class Tela_Inicial_Nova : Form
+    public partial class Tela_Inicial_Consulta : Form
     {
         List<Pessoa> pessoas = new List<Pessoa>();
-        public Tela_Inicial_Nova()
+        public Tela_Inicial_Consulta()
         {
             InitializeComponent();
 
