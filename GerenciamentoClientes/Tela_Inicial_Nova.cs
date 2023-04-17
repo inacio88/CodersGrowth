@@ -20,7 +20,7 @@ namespace GerenciamentoClientes
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void AoClicarEmNovo(object sender, EventArgs e)
         {
             
 
@@ -35,14 +35,6 @@ namespace GerenciamentoClientes
 
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void Tela_Inicial_Nova_Load(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

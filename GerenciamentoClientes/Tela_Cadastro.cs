@@ -22,11 +22,8 @@ namespace GerenciamentoClientes
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-        private void Btn_Salvar_Click(object sender, EventArgs e)
+       
+        private void AoClicarEmSalvar(object sender, EventArgs e)
         {
             pessoa.Id = Pessoa.GerarId();
             pessoa.Nome = Txt_Nome.Text;
