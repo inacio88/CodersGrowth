@@ -22,7 +22,7 @@ namespace GerenciamentoClientes
             }
         }
 
-       
+
         private void AoClicarEmSalvar(object sender, EventArgs e)
         {
             pessoa.Id = Pessoa.GerarId();
@@ -31,6 +31,11 @@ namespace GerenciamentoClientes
             pessoa.Cpf = Txt_Cpf.Text;
             pessoa.DataNascimento = Txt_DataNasc.Text;
             DialogResult = DialogResult.OK;
+        }
+
+        private void AoClicarEmCancelar(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
         }
     }
 }
