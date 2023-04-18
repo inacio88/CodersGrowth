@@ -22,19 +22,26 @@ namespace GerenciamentoClientes
 
         private void AoClicarEmNovo(object sender, EventArgs e)
         {
-            
+
 
             var tela_cad = new Tela_Cadastro();
             var resultado = tela_cad.ShowDialog(null);
-                if (resultado == DialogResult.OK)
-                {
-                    pessoas.Add(tela_cad.pessoa);
-                }
+            if (resultado == DialogResult.OK)
+            {
+                pessoas.Add(tela_cad.pessoa);
+            }
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = pessoas;
 
         }
 
-        
+        private void AoClicarEmEditar(object sender, EventArgs e)
+        {
+            var indexSelecionado = dataGridView1.CurrentCell.RowIndex;
+            var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
+            var tela_Cadastro = new Tela_Cadastro(clienteSelecionado);
+            var resultado = tela_Cadastro.ShowDialog();
+
+        }
     }
 }

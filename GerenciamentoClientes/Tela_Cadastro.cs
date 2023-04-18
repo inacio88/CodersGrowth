@@ -20,6 +20,21 @@ namespace GerenciamentoClientes
             {
                 pessoa = new Pessoa();
             }
+           
+        }
+        public Tela_Cadastro(Pessoa pessoa)
+        {
+            InitializeComponent();
+            if (pessoa != null)
+            {
+                Txt_Nome.Text = pessoa.Nome;
+                Txt_Email.Text = pessoa.Email;
+                Txt_Cpf.Text = pessoa.Cpf;
+                Txt_DataNasc.Text = pessoa.DataNascimento;
+
+                DialogResult = DialogResult.OK;
+
+            }
         }
 
 
