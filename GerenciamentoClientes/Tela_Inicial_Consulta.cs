@@ -24,7 +24,7 @@ namespace GerenciamentoClientes
         {
 
 
-            var tela_cad = new Tela_Cadastro();
+            var tela_cad = new Tela_Cadastro(null);
             var resultado = tela_cad.ShowDialog(null);
             if (resultado == DialogResult.OK)
             {
@@ -41,6 +41,14 @@ namespace GerenciamentoClientes
             var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
             var tela_Cadastro = new Tela_Cadastro(clienteSelecionado);
             var resultado = tela_Cadastro.ShowDialog();
+            if (resultado == DialogResult.OK)
+            {
+                dataGridView1.DataSource = null;
+                dataGridView1.DataSource = pessoas;
+
+            }
+
+
 
         }
     }

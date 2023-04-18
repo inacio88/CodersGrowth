@@ -13,34 +13,35 @@ namespace GerenciamentoClientes
     public partial class Tela_Cadastro : Form
     {
         public Pessoa pessoa { get; set; }
-        public Tela_Cadastro()
+        public Tela_Cadastro(Pessoa pessoaSelecionada)
         {
             InitializeComponent();
-            if (pessoa == null)
+            if (pessoaSelecionada == null)
             {
                 pessoa = new Pessoa();
             }
-           
-        }
-        public Tela_Cadastro(Pessoa pessoa)
-        {
-            InitializeComponent();
-            if (pessoa != null)
+            else
             {
+                PreencherCampos(pessoaSelecionada);
+                pessoa = pessoaSelecionada;
+            }
+            //DialogResult = DialogResult.OK;
+        }
+        public void PreencherCampos(Pessoa pessoa)
+        {
                 Txt_Nome.Text = pessoa.Nome;
                 Txt_Email.Text = pessoa.Email;
                 Txt_Cpf.Text = pessoa.Cpf;
-                Txt_DataNasc.Text = pessoa.DataNascimento;
-
-                DialogResult = DialogResult.OK;
-
-            }
+                Txt_DataNasc.Text = pessoa.DataNascimento; 
         }
 
 
         private void AoClicarEmSalvar(object sender, EventArgs e)
         {
-            pessoa.Id = Pessoa.GerarId();
+            if (pessoa.Id == 0){
+                pessoa.Id = Pessoa.GerarId();
+            }
+            
             pessoa.Nome = Txt_Nome.Text;
             pessoa.Email = Txt_Email.Text;
             pessoa.Cpf = Txt_Cpf.Text;
