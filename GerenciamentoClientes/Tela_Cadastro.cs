@@ -25,7 +25,6 @@ namespace GerenciamentoClientes
                 PreencherCampos(pessoaSelecionada);
                 pessoa = pessoaSelecionada;
             }
-            //DialogResult = DialogResult.OK;
         }
         public void PreencherCampos(Pessoa pessoa)
         {
@@ -38,7 +37,8 @@ namespace GerenciamentoClientes
 
         private void AoClicarEmSalvar(object sender, EventArgs e)
         {
-            if (pessoa.Id == 0){
+            if (pessoa.Id == Decimal.Zero)
+            {
                 pessoa.Id = Pessoa.GerarId();
             }
             

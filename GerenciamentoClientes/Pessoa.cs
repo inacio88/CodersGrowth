@@ -1,11 +1,15 @@
-﻿namespace GerenciamentoClientes
+﻿using System.Windows.Forms.VisualStyles;
+
+namespace GerenciamentoClientes
 {
     public class Pessoa
     {
-        public static int RefenciaId = 0;
+        const int InicialReferenciaID = 0;
+        const int IncrementoID = 1;
+        public static int RefenciaId = InicialReferenciaID;
         public static int GerarId()
         {
-            Pessoa.RefenciaId = Pessoa.RefenciaId + 1;
+            Pessoa.RefenciaId = Pessoa.RefenciaId + IncrementoID;
             return Pessoa.RefenciaId;
         }
         

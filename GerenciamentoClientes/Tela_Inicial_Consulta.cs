@@ -34,7 +34,7 @@ namespace GerenciamentoClientes
             dataGridView1.DataSource = pessoas;
 
         }
-
+        
         private void AoClicarEmEditar(object sender, EventArgs e)
         {
             var indexSelecionado = dataGridView1.CurrentCell.RowIndex;
@@ -45,11 +45,7 @@ namespace GerenciamentoClientes
             {
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = pessoas;
-
             }
-
-
-
         }
     }
 }
