@@ -34,6 +34,11 @@ namespace GerenciamentoClientes
                 Txt_DataNasc.Text = pessoa.DataNascimento; 
         }
 
+        public bool Validacao()
+        {
+            return true;
+        }
+
 
         private void AoClicarEmSalvar(object sender, EventArgs e)
         {
