@@ -42,9 +42,9 @@ namespace GerenciamentoClientes
             var tamanhoEmail = Txt_Email.Text.Length;
             var tamanhoCpf = Txt_Cpf.Text.Length;
             var tamanhoDataNascimento = Txt_DataNasc.Text.Length;
-            if (tamanhoNome < 1 || ValidacaoEmail() || tamanhoCpf < 14 || tamanhoDataNascimento < 10)
+            if (tamanhoNome < 1 || ValidacaoEmail() || tamanhoCpf < 14 || ValidacaoDataNascimento())
             {
-                string message = "Certifique-se que: \n *Nome seja maior que 2 \n *Email maior que 4 \n * CPF igual a 11 \n * Data de nascimento completa";
+                string message = "Certifique-se que: \n *Nome não fique em branco \n *Email válido \n * CPF igual a 11 \n * Data de nascimento válida";
                 string title = "Campos Inválidos!";
                 MessageBoxButtons buttons = MessageBoxButtons.OK;
                 DialogResult result = MessageBox.Show(message, title, buttons);
@@ -64,6 +64,45 @@ namespace GerenciamentoClientes
             return !emailOk;
         }
 
+        public bool ValidacaoDataNascimento()
+        {
+            const int TamanhoDataSemMascara = 8;
+            var dia = 0;
+            var mes = 0;
+            var ano = 0;
+
+            string dataSemMascara = Txt_DataNasc.Text.Replace("/","");
+            bool dataSemMascaraOk = Regex.IsMatch(dataSemMascara, "^[0-9]+$");
+
+            if (dataSemMascaraOk && dataSemMascara.Length == TamanhoDataSemMascara)
+            {
+                dia = Convert.ToInt32(Txt_DataNasc.Text.Substring(0, 2));
+                mes = Convert.ToInt32(Txt_DataNasc.Text.Substring(3, 2));
+                ano = Convert.ToInt32(Txt_DataNasc.Text.Substring(6, 4));
+            }
+            else
+            {
+                return true;
+            }
+
+            if (dia > 31 || mes > 12 || ano > DateTime.Now.Year)
+            {
+                return true;
+            }
+
+            DateTime dataNascimento = Convert.ToDateTime(Txt_DataNasc.Text);
+            var difencaAnos = DateTime.Now.Year - dataNascimento.Year;
+
+            if (difencaAnos > 120)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
 
         private void AoClicarEmSalvar(object sender, EventArgs e)
         {
