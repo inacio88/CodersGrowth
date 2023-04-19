@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace GerenciamentoClientes
 {
     public partial class Tela_Cadastro : Form
     {
+
         public Pessoa pessoa { get; set; }
         public Tela_Cadastro(Pessoa pessoaSelecionada)
         {
@@ -34,9 +36,32 @@ namespace GerenciamentoClientes
                 Txt_DataNasc.Text = pessoa.DataNascimento; 
         }
 
-        public bool Validacao()
+        public bool ValidacaoCampoGeral()
         {
-            return true;
+            var tamanhoNome = Txt_Nome.Text.Length;
+            var tamanhoEmail = Txt_Email.Text.Length;
+            var tamanhoCpf = Txt_Cpf.Text.Length;
+            var tamanhoDataNascimento = Txt_DataNasc.Text.Length;
+            if (tamanhoNome < 1 || ValidacaoEmail() || tamanhoCpf < 14 || tamanhoDataNascimento < 10)
+            {
+                string message = "Certifique-se que: \n *Nome seja maior que 2 \n *Email maior que 4 \n * CPF igual a 11 \n * Data de nascimento completa";
+                string title = "Campos Inválidos!";
+                MessageBoxButtons buttons = MessageBoxButtons.OK;
+                DialogResult result = MessageBox.Show(message, title, buttons);
+                
+                return false;
+            }
+            else
+            {
+                return true;            
+            }
+        }
+
+        public bool ValidacaoEmail()
+        {
+            bool emailOk = Regex.IsMatch(Txt_Email.Text, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            
+            return !emailOk;
         }
 
 
@@ -51,7 +76,16 @@ namespace GerenciamentoClientes
             pessoa.Email = Txt_Email.Text;
             pessoa.Cpf = Txt_Cpf.Text;
             pessoa.DataNascimento = Txt_DataNasc.Text;
-            DialogResult = DialogResult.OK;
+
+            if (ValidacaoCampoGeral())
+            {
+                pessoa.Nome = Txt_Nome.Text;
+                pessoa.Email = Txt_Email.Text;
+                pessoa.Cpf = Txt_Cpf.Text;
+                pessoa.DataNascimento = Txt_DataNasc.Text;
+
+                DialogResult = DialogResult.OK;
+            }
         }
 
         private void AoClicarEmCancelar(object sender, EventArgs e)
