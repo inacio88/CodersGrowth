@@ -33,7 +33,7 @@ namespace GerenciamentoClientes
                 Txt_Nome.Text = pessoa.Nome;
                 Txt_Email.Text = pessoa.Email;
                 Txt_Cpf.Text = pessoa.Cpf;
-                Txt_DataNasc.Text = pessoa.DataNascimento; 
+                Txt_DataNasc.Text = pessoa.DataNascimento.ToString();
         }
         public void MensagemValidacao(string message)
         {
@@ -45,9 +45,9 @@ namespace GerenciamentoClientes
         public bool ValidacaoCampoGeral()
         {
 
-            if (Txt_Nome.Text.Length < 1)
+            if (ValidarNome())
             {
-                MensagemValidacao("* Nome não pode ficar em branco!");
+                MensagemValidacao("* Nome inválido!");
                 return false;
             }
             else if (ValidacaoEmail())
@@ -55,19 +55,32 @@ namespace GerenciamentoClientes
                 MensagemValidacao("* Email inválido!");
                 return false;
             }
-            else if (ValidacaoDataNascimento())
-            {
-                MensagemValidacao("* Data de nascimento inválida!");
-                return false;
-            }
             else if (ValidacaoCpf())
             {
                 MensagemValidacao("* CPF inválido!");
                 return false;
             }
+            else if (ValidacaoDataNascimento())
+            {
+                MensagemValidacao("* Data de nascimento inválida!");
+                return false;
+            }
             else
             {
                 return true;            
+            }
+        }
+
+        public bool ValidarNome()
+        {
+            bool nomeOk = Regex.IsMatch(Txt_Nome.Text, @"^\D*$");
+            if (Txt_Nome.Text == "" || !nomeOk)
+            {
+                return true;
+            }
+            else
+            {
+                return false; 
             }
         }
 
@@ -96,13 +109,14 @@ namespace GerenciamentoClientes
 
         public bool ValidacaoDataNascimento()
         {
-            
+            const int IdadeMaximaEmAnos = 120;
+            const int IdadeMinimaEmDias = 1;
             try
             {
                 DateTime dataNascimento = Convert.ToDateTime(Txt_DataNasc.Text);
                 var diferencaAnos = DateTime.Now.Year - dataNascimento.Year;
                 var diferencaDias = DateTime.Now - dataNascimento;
-                if (diferencaAnos > 120 || diferencaDias.Days < 1)
+                if (diferencaAnos > IdadeMaximaEmAnos || diferencaDias.Days < IdadeMinimaEmDias)
                 {
                     return true;
                 }
@@ -136,7 +150,7 @@ namespace GerenciamentoClientes
                     pessoa.Nome = Txt_Nome.Text;
                     pessoa.Email = Txt_Email.Text;
                     pessoa.Cpf = Txt_Cpf.Text;
-                    pessoa.DataNascimento = Txt_DataNasc.Text;
+                    pessoa.DataNascimento = DateTime.Parse(Txt_DataNasc.Text);
 
                     DialogResult = DialogResult.OK;
                 }

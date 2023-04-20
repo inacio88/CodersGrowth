@@ -36,7 +36,7 @@ namespace GerenciamentoClientes
             }
             catch
             {
-                throw new Exception("Entrar em contato com o adm do sistema");
+                throw new Exception("Erro inesperado, entrar em contato com o adm do sistema");
             }
             
         }
@@ -57,7 +57,7 @@ namespace GerenciamentoClientes
             }
             catch
             {
-                throw new Exception("Entrar em contato com o adm do sistema");
+                throw new Exception("Erro inesperado, entrar em contato com o adm do sistema");
             }
         }
     }
