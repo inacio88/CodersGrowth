@@ -37,17 +37,14 @@ namespace GerenciamentoClientes
         }
         public void MensagemValidacao(string message)
         {
-            //string message = "Certifique-se que: \n *Nome não fique em branco \n *Email válido \n * CPF igual a 11 \n * Data de nascimento válida";
             string title = "Campos Inválidos!";
             MessageBoxButtons buttons = MessageBoxButtons.OK;
             DialogResult result = MessageBox.Show(message, title, buttons);
-
         }
 
         public bool ValidacaoCampoGeral()
         {
             var tamanhoNome = Txt_Nome.Text.Length;
-            var tamanhoCpf = Txt_Cpf.Text.Length;
             
             if (tamanhoNome < 1)
             {
@@ -77,13 +74,24 @@ namespace GerenciamentoClientes
 
         public bool ValidacaoCpf()
         {
-            return false;
+            const int tamanhoCpfSemMascara = 11;
+            string cpfSemMascara = Txt_Cpf.Text.Replace(",", "").Replace("-", "").Replace(" ", "");
+            bool cpfSemMascaraOk = Regex.IsMatch(cpfSemMascara, "^[0-9]+$");
+
+            if (cpfSemMascara.Length != tamanhoCpfSemMascara || !cpfSemMascaraOk)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         public bool ValidacaoEmail()
         {
             bool emailOk = Regex.IsMatch(Txt_Email.Text, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-            
             return !emailOk;
         }
 
@@ -94,8 +102,8 @@ namespace GerenciamentoClientes
             {
                 DateTime dataNascimento = Convert.ToDateTime(Txt_DataNasc.Text);
                 var diferencaAnos = DateTime.Now.Year - dataNascimento.Year;
-                //var dife
-                if (diferencaAnos > 120)
+                var diferencaDias = DateTime.Now - dataNascimento;
+                if (diferencaAnos > 120 || diferencaDias.Days < 1)
                 {
                     return true;
                 }
@@ -105,8 +113,9 @@ namespace GerenciamentoClientes
                 }
 
             }
-            catch
+            catch (Exception e)
             {
+                MensagemValidacao(e.Message);
                 return true;
             }
 
