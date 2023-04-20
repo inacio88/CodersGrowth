@@ -44,9 +44,8 @@ namespace GerenciamentoClientes
 
         public bool ValidacaoCampoGeral()
         {
-            var tamanhoNome = Txt_Nome.Text.Length;
-            
-            if (tamanhoNome < 1)
+
+            if (Txt_Nome.Text.Length < 1)
             {
                 MensagemValidacao("* Nome não pode ficar em branco!");
                 return false;
@@ -123,38 +122,54 @@ namespace GerenciamentoClientes
 
         private void AoClicarEmSalvar(object sender, EventArgs e)
         {
-            if (pessoa.Id == Decimal.Zero)
+
+            try
             {
-                pessoa.Id = Pessoa.GerarId();
+                if (pessoa.Id == Decimal.Zero)
+                {
+                    pessoa.Id = Pessoa.GerarId();
+                }
+
+
+                if (ValidacaoCampoGeral())
+                {
+                    pessoa.Nome = Txt_Nome.Text;
+                    pessoa.Email = Txt_Email.Text;
+                    pessoa.Cpf = Txt_Cpf.Text;
+                    pessoa.DataNascimento = Txt_DataNasc.Text;
+
+                    DialogResult = DialogResult.OK;
+                }
             }
+            catch
+            {
+                throw new Exception("Entrar em contato com o adm do sistema");
+            }
+
             
-            pessoa.Nome = Txt_Nome.Text;
-            pessoa.Email = Txt_Email.Text;
-            pessoa.Cpf = Txt_Cpf.Text;
-            pessoa.DataNascimento = Txt_DataNasc.Text;
-
-            if (ValidacaoCampoGeral())
-            {
-                pessoa.Nome = Txt_Nome.Text;
-                pessoa.Email = Txt_Email.Text;
-                pessoa.Cpf = Txt_Cpf.Text;
-                pessoa.DataNascimento = Txt_DataNasc.Text;
-
-                DialogResult = DialogResult.OK;
-            }
         }
 
         private void AoClicarEmCancelar(object sender, EventArgs e)
         {
-            string message = "Se fechar os dados preenchidos serão pedidos. Tem certeza?";
-            string title = "Tem certeza?";
-            MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-            DialogResult result = MessageBox.Show(message, title, buttons);
-            if (result == DialogResult.Yes)
+            try
             {
-                DialogResult = DialogResult.Cancel;
+                string message = "Se fechar os dados preenchidos serão pedidos. Tem certeza?";
+                string title = "Tem certeza?";
+                MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+                DialogResult result = MessageBox.Show(message, title, buttons);
+                if (result == DialogResult.Yes)
+                {
+                    DialogResult = DialogResult.Cancel;
+                }
+
+
             }
-            
+            catch (Exception)
+            {
+
+                throw new Exception("Entrar em contato com o adm do sistema");
+            }
+ 
         }
     }
 }
