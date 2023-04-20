@@ -30,10 +30,10 @@ namespace GerenciamentoClientes
         }
         public void PreencherCampos(Pessoa pessoa)
         {
-                Txt_Nome.Text = pessoa.Nome;
-                Txt_Email.Text = pessoa.Email;
-                Txt_Cpf.Text = pessoa.Cpf;
-                Txt_DataNasc.Text = pessoa.DataNascimento.ToString();
+            Txt_Nome.Text = pessoa.Nome;
+            Txt_Email.Text = pessoa.Email;
+            Txt_Cpf.Text = pessoa.Cpf;
+            Txt_DataNasc.Text = pessoa.DataNascimento.ToString();
         }
         public void MensagemValidacao(string message)
         {
@@ -50,25 +50,23 @@ namespace GerenciamentoClientes
                 MensagemValidacao("* Nome inválido!");
                 return false;
             }
-            else if (ValidacaoEmail())
+            if (ValidacaoEmail())
             {
                 MensagemValidacao("* Email inválido!");
                 return false;
             }
-            else if (ValidacaoCpf())
+            if (ValidacaoCpf())
             {
                 MensagemValidacao("* CPF inválido!");
                 return false;
             }
-            else if (ValidacaoDataNascimento())
+            if (ValidacaoDataNascimento())
             {
                 MensagemValidacao("* Data de nascimento inválida!");
                 return false;
             }
-            else
-            {
-                return true;            
-            }
+
+            return true;
         }
 
         public bool ValidarNome()
@@ -80,14 +78,14 @@ namespace GerenciamentoClientes
             }
             else
             {
-                return false; 
+                return false;
             }
         }
 
         public bool ValidacaoCpf()
         {
             const int tamanhoCpfSemMascara = 11;
-            string cpfSemMascara = Txt_Cpf.Text.Replace(",", "").Replace("-", "").Replace(" ", "");
+            string cpfSemMascara = Txt_Cpf.Text.Replace(".", "").Replace("-", "").Replace(" ", "");
             bool cpfSemMascaraOk = Regex.IsMatch(cpfSemMascara, "^[0-9]+$");
 
             if (cpfSemMascara.Length != tamanhoCpfSemMascara || !cpfSemMascaraOk)
@@ -160,7 +158,7 @@ namespace GerenciamentoClientes
                 throw new Exception("Entrar em contato com o adm do sistema");
             }
 
-            
+
         }
 
         private void AoClicarEmCancelar(object sender, EventArgs e)
@@ -183,7 +181,7 @@ namespace GerenciamentoClientes
 
                 throw new Exception("Entrar em contato com o adm do sistema");
             }
- 
+
         }
     }
 }
