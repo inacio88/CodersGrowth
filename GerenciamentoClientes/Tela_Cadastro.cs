@@ -35,26 +35,49 @@ namespace GerenciamentoClientes
                 Txt_Cpf.Text = pessoa.Cpf;
                 Txt_DataNasc.Text = pessoa.DataNascimento; 
         }
+        public void MensagemValidacao(string message)
+        {
+            //string message = "Certifique-se que: \n *Nome não fique em branco \n *Email válido \n * CPF igual a 11 \n * Data de nascimento válida";
+            string title = "Campos Inválidos!";
+            MessageBoxButtons buttons = MessageBoxButtons.OK;
+            DialogResult result = MessageBox.Show(message, title, buttons);
+
+        }
 
         public bool ValidacaoCampoGeral()
         {
             var tamanhoNome = Txt_Nome.Text.Length;
-            var tamanhoEmail = Txt_Email.Text.Length;
             var tamanhoCpf = Txt_Cpf.Text.Length;
-            var tamanhoDataNascimento = Txt_DataNasc.Text.Length;
-            if (tamanhoNome < 1 || ValidacaoEmail() || tamanhoCpf < 14 || ValidacaoDataNascimento())
+            
+            if (tamanhoNome < 1)
             {
-                string message = "Certifique-se que: \n *Nome não fique em branco \n *Email válido \n * CPF igual a 11 \n * Data de nascimento válida";
-                string title = "Campos Inválidos!";
-                MessageBoxButtons buttons = MessageBoxButtons.OK;
-                DialogResult result = MessageBox.Show(message, title, buttons);
-                
+                MensagemValidacao("* Nome não pode ficar em branco!");
+                return false;
+            }
+            else if (ValidacaoEmail())
+            {
+                MensagemValidacao("* Email inválido!");
+                return false;
+            }
+            else if (ValidacaoDataNascimento())
+            {
+                MensagemValidacao("* Data de nascimento inválida!");
+                return false;
+            }
+            else if (ValidacaoCpf())
+            {
+                MensagemValidacao("* CPF inválido!");
                 return false;
             }
             else
             {
                 return true;            
             }
+        }
+
+        public bool ValidacaoCpf()
+        {
+            return false;
         }
 
         public bool ValidacaoEmail()
@@ -66,40 +89,25 @@ namespace GerenciamentoClientes
 
         public bool ValidacaoDataNascimento()
         {
-            const int TamanhoDataSemMascara = 8;
-            var dia = 0;
-            var mes = 0;
-            var ano = 0;
-
-            string dataSemMascara = Txt_DataNasc.Text.Replace("/","");
-            bool dataSemMascaraOk = Regex.IsMatch(dataSemMascara, "^[0-9]+$");
-
-            if (dataSemMascaraOk && dataSemMascara.Length == TamanhoDataSemMascara)
+            
+            try
             {
-                dia = Convert.ToInt32(Txt_DataNasc.Text.Substring(0, 2));
-                mes = Convert.ToInt32(Txt_DataNasc.Text.Substring(3, 2));
-                ano = Convert.ToInt32(Txt_DataNasc.Text.Substring(6, 4));
+                DateTime dataNascimento = Convert.ToDateTime(Txt_DataNasc.Text);
+                var diferencaAnos = DateTime.Now.Year - dataNascimento.Year;
+                //var dife
+                if (diferencaAnos > 120)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
             }
-            else
+            catch
             {
                 return true;
-            }
-
-            if (dia > 31 || mes > 12 || ano > DateTime.Now.Year)
-            {
-                return true;
-            }
-
-            DateTime dataNascimento = Convert.ToDateTime(Txt_DataNasc.Text);
-            var difencaAnos = DateTime.Now.Year - dataNascimento.Year;
-
-            if (difencaAnos > 120)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
             }
 
         }
