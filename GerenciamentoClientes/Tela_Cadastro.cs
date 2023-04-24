@@ -116,6 +116,7 @@ namespace GerenciamentoClientes
                 var diferencaDias = DateTime.Now - dataNascimento;
                 if (diferencaAnos > IdadeMaximaEmAnos || diferencaDias.Days < IdadeMinimaEmDias)
                 {
+                    MensagemValidacao("A idade deve ser entre 1 e 120 anos");
                     return true;
                 }
                 else
@@ -127,8 +128,8 @@ namespace GerenciamentoClientes
             catch (Exception e)
             {
                 MensagemValidacao(e.Message);
-                return true;
             }
+            return false;
 
         }
 

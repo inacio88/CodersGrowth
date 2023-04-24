@@ -35,39 +35,55 @@
         {
             try
             {
-                var indexSelecionado = dataGridView1.CurrentCell.RowIndex;
-                var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
-                var tela_Cadastro = new Tela_Cadastro(clienteSelecionado);
-                var resultado = tela_Cadastro.ShowDialog();
-                if (resultado == DialogResult.OK)
+                if (listaDePessoas.Count == decimal.Zero)
                 {
-                    dataGridView1.DataSource = null;
-                    dataGridView1.DataSource = listaDePessoas;
+                    MessageBox.Show("Não há nada selecionado", "Vazio", MessageBoxButtons.OK);
+                }
+                else
+                {
+                    var indexSelecionado = dataGridView1.CurrentCell.RowIndex;
+                    var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
+                    var tela_Cadastro = new Tela_Cadastro(clienteSelecionado);
+                    var resultado = tela_Cadastro.ShowDialog();
+                    if (resultado == DialogResult.OK)
+                    {
+                        dataGridView1.DataSource = null;
+                        dataGridView1.DataSource = listaDePessoas;
+                    }
                 }
             }
             catch
             {
-                throw new Exception("Erro inesperado, entrar em contato com o adm do sistema");
+                MessageBox.Show("Erro inesperado, entrar em contato com o adm do sistema", "Erro", MessageBoxButtons.OK);
             }
         }
 
         private void AoClicarEmExcluir(object sender, EventArgs e)
         {
-            try 
+            try
             {
-                var indexSelecionado = dataGridView1.CurrentCell.RowIndex;
-                var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
-                DialogResult result = MessageBox.Show("Deseja excluir selecionado?","Excluir", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
+
+                if (listaDePessoas.Count == decimal.Zero)
                 {
-                    listaDePessoas.Remove(clienteSelecionado);
-                    dataGridView1.DataSource = null;
-                    dataGridView1.DataSource = listaDePessoas;
+                    MessageBox.Show("Não há nada selecionado", "Vazio", MessageBoxButtons.OK);
+                }
+                else
+                {
+                    var indexSelecionado = dataGridView1.CurrentCell.RowIndex;
+                    var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
+                    DialogResult result = MessageBox.Show("Deseja excluir selecionado?", "Excluir", MessageBoxButtons.YesNo);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        listaDePessoas.Remove(clienteSelecionado);
+                        dataGridView1.DataSource = null;
+                        dataGridView1.DataSource = listaDePessoas;
+                    }
                 }
             }
-            catch 
+            catch
             {
-                throw new Exception("Erro inesperado, entrar em contato com o adm do sistema");
+                MessageBox.Show("Erro inesperado, entrar em contato com o adm do sistema", "Erro", MessageBoxButtons.OK);
             }
         }
     }
