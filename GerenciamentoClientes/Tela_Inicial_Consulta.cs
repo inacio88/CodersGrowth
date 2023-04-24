@@ -3,7 +3,7 @@
 
     public partial class Tela_Inicial_Consulta : Form
     {
-        List<Pessoa> pessoas = new List<Pessoa>();
+        List<Pessoa> listaDePessoas = new List<Pessoa>();
         public Tela_Inicial_Consulta()
         {
             InitializeComponent();
@@ -18,10 +18,10 @@
                 var resultado = tela_cad.ShowDialog(null);
                 if (resultado == DialogResult.OK)
                 {
-                    pessoas.Add(tela_cad.pessoa);
+                    listaDePessoas.Add(tela_cad.pessoa);
                 }
                 dataGridView1.DataSource = null;
-                dataGridView1.DataSource = pessoas;
+                dataGridView1.DataSource = listaDePessoas;
 
             }
             catch
@@ -42,7 +42,7 @@
                 if (resultado == DialogResult.OK)
                 {
                     dataGridView1.DataSource = null;
-                    dataGridView1.DataSource = pessoas;
+                    dataGridView1.DataSource = listaDePessoas;
                 }
             }
             catch
@@ -53,18 +53,20 @@
 
         private void AoClicarEmExcluir(object sender, EventArgs e)
         {
-            try {
+            try 
+            {
                 var indexSelecionado = dataGridView1.CurrentCell.RowIndex;
                 var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
                 DialogResult result = MessageBox.Show("Deseja excluir selecionado?","Excluir", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    pessoas.Remove(clienteSelecionado);
+                    listaDePessoas.Remove(clienteSelecionado);
                     dataGridView1.DataSource = null;
-                    dataGridView1.DataSource = pessoas;
+                    dataGridView1.DataSource = listaDePessoas;
                 }
             }
-            catch {
+            catch 
+            {
                 throw new Exception("Erro inesperado, entrar em contato com o adm do sistema");
             }
         }
