@@ -91,7 +91,7 @@
             Lbl_Data_Nasc.Location = new Point(29, 343);
             Lbl_Data_Nasc.Name = "Lbl_Data_Nasc";
             Lbl_Data_Nasc.Size = new Size(178, 30);
-            Lbl_Data_Nasc.TabIndex = 7;
+            Lbl_Data_Nasc.TabIndex = 6;
             Lbl_Data_Nasc.Text = "Data Nascimento";
             // 
             // Btn_Salvar
@@ -111,7 +111,7 @@
             Txt_DataNasc.Mask = "00/00/0000";
             Txt_DataNasc.Name = "Txt_DataNasc";
             Txt_DataNasc.Size = new Size(100, 23);
-            Txt_DataNasc.TabIndex = 9;
+            Txt_DataNasc.TabIndex = 7;
             Txt_DataNasc.ValidatingType = typeof(DateTime);
             // 
             // Txt_Cpf
@@ -120,7 +120,7 @@
             Txt_Cpf.Mask = "000,000,000-00";
             Txt_Cpf.Name = "Txt_Cpf";
             Txt_Cpf.Size = new Size(178, 23);
-            Txt_Cpf.TabIndex = 10;
+            Txt_Cpf.TabIndex = 5;
             // 
             // Btn_Cancelar
             // 
