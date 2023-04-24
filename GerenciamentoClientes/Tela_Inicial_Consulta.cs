@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace GerenciamentoClientes
+﻿namespace GerenciamentoClientes
 {
 
     public partial class Tela_Inicial_Consulta : Form
     {
-        List<Pessoa> pessoas = new List<Pessoa>();
+        List<Pessoa> listaDePessoas = new List<Pessoa>();
         public Tela_Inicial_Consulta()
         {
             InitializeComponent();
@@ -28,19 +18,19 @@ namespace GerenciamentoClientes
                 var resultado = tela_cad.ShowDialog(null);
                 if (resultado == DialogResult.OK)
                 {
-                    pessoas.Add(tela_cad.pessoa);
+                    listaDePessoas.Add(tela_cad.pessoa);
                 }
                 dataGridView1.DataSource = null;
-                dataGridView1.DataSource = pessoas;
+                dataGridView1.DataSource = listaDePessoas;
 
             }
             catch
             {
                 throw new Exception("Erro inesperado, entrar em contato com o adm do sistema");
             }
-            
+
         }
-        
+
         private void AoClicarEmEditar(object sender, EventArgs e)
         {
             try
@@ -52,10 +42,30 @@ namespace GerenciamentoClientes
                 if (resultado == DialogResult.OK)
                 {
                     dataGridView1.DataSource = null;
-                    dataGridView1.DataSource = pessoas;
+                    dataGridView1.DataSource = listaDePessoas;
                 }
             }
             catch
+            {
+                throw new Exception("Erro inesperado, entrar em contato com o adm do sistema");
+            }
+        }
+
+        private void AoClicarEmExcluir(object sender, EventArgs e)
+        {
+            try 
+            {
+                var indexSelecionado = dataGridView1.CurrentCell.RowIndex;
+                var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
+                DialogResult result = MessageBox.Show("Deseja excluir selecionado?","Excluir", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    listaDePessoas.Remove(clienteSelecionado);
+                    dataGridView1.DataSource = null;
+                    dataGridView1.DataSource = listaDePessoas;
+                }
+            }
+            catch 
             {
                 throw new Exception("Erro inesperado, entrar em contato com o adm do sistema");
             }

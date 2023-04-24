@@ -71,7 +71,7 @@ namespace GerenciamentoClientes
 
         public bool ValidarNome()
         {
-            bool nomeOk = Regex.IsMatch(Txt_Nome.Text, @"^\D*$");
+            bool nomeOk = Regex.IsMatch(Txt_Nome.Text, @"^[a-zA-ZÀ-ÖØ-öø-ÿ ]+$");
             if (Txt_Nome.Text == "" || !nomeOk)
             {
                 return true;
