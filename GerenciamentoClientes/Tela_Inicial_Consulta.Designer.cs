@@ -76,6 +76,7 @@
             Btn_Excluir.TabIndex = 3;
             Btn_Excluir.Text = "Excluir";
             Btn_Excluir.UseVisualStyleBackColor = true;
+            Btn_Excluir.Click += AoClicarEmExcluir;
             // 
             // Lbl_Titulo
             // 
