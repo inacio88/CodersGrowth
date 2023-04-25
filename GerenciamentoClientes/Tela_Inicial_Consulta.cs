@@ -3,7 +3,7 @@
 
     public partial class Tela_Inicial_Consulta : Form
     {
-        List<Pessoa> listaDePessoas = new List<Pessoa>();
+        List<Pessoa> listaDePessoas = ListaPessoasSingleTon.getInstance();
         public Tela_Inicial_Consulta()
         {
             InitializeComponent();
