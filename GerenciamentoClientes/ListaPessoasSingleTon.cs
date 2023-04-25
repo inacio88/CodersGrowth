@@ -10,7 +10,7 @@ namespace GerenciamentoClientes
     {
         private static List<Pessoa> instancia;
         
-        public static List<Pessoa> getInstance()
+        public static List<Pessoa> obterInstancia()
         {
             if (instancia == null)
             {
