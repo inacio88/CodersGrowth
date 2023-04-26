@@ -33,5 +33,9 @@ namespace GerenciamentoClientes
             return pessoaBuscada;
         }
 
+        public void AtualizarPessoa(int Id)
+        {
+            Pessoa pessoaBuscada = ObterPessoaPorId(Id);
+        }
     }
 }
