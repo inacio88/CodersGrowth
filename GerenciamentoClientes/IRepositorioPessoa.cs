@@ -8,12 +8,10 @@ namespace GerenciamentoClientes
 {
     internal interface IRepositorioPessoa
     {
-        public List<Pessoa> ObterTodos();
-        public void CriarPessoa();
-        public void Remover(int Id);
-        public Pessoa ObterPorId(int Id);
-
-        public Pessoa Atualizar(int Id);
+        public List<Pessoa> ObterTodasPessoas();
+        public void CriarPessoa(Pessoa pessoa);
+        public void RemoverPessoa(int Id);
+        public Pessoa ObterPessoaPorId(int Id);
 
     }
 }

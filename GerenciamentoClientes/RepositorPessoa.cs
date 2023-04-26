@@ -6,30 +6,32 @@ using System.Threading.Tasks;
 
 namespace GerenciamentoClientes
 {
-    internal class RepositorPessoa
+    internal class RepositorPessoa : IRepositorioPessoa
     {
-        public List<Pessoa> ObterTodos()
-        {
-            List<Pessoa> lista;
+        protected List<Pessoa> listaDePessoas = ListaPessoasSingleTon.obterInstancia();
 
-            return lista;
-        }
-        public void CriarPessoa()
+        public List<Pessoa> ObterTodasPessoas()
         {
-
-        }
-        public void Remover(int Id)
-        {
-
-        }
-        public Pessoa ObterPorId(int Id)
-        {
-
+            
+            return listaDePessoas;
         }
 
-        public Pessoa Atualizar(int Id)
+        public void CriarPessoa(Pessoa pessoa)
         {
-
+            listaDePessoas.Add(pessoa);
         }
+        public void RemoverPessoa(int Id)
+        {
+            Pessoa pessoa = ObterPessoaPorId(Id);
+
+            listaDePessoas.Remove(pessoa);
+        }
+        public Pessoa ObterPessoaPorId(int Id)
+        {
+            Pessoa pessoaBuscada = listaDePessoas.Find(x => x.Id == Id);
+
+            return pessoaBuscada;
+        }
+
     }
 }
