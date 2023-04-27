@@ -14,11 +14,11 @@
         {
             try
             {
-                var tela_cad = new Tela_Cadastro(null);
-                var resultado = tela_cad.ShowDialog(null);
+                var telaCadastro = new Tela_Cadastro(null);
+                var resultado = telaCadastro.ShowDialog(null);
                 if (resultado == DialogResult.OK)
                 {
-                    repositorPessoa.CriarPessoa(tela_cad.pessoa);
+                    repositorPessoa.CriarPessoa(telaCadastro.pessoa);
                 }
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = repositorPessoa.ObterTodasPessoas();
@@ -35,7 +35,7 @@
         {
             try
             {
-                List<Pessoa> listaDePessoas = repositorPessoa.ObterTodasPessoas();
+                var listaDePessoas = repositorPessoa.ObterTodasPessoas();
 
                 if (listaDePessoas.Count == decimal.Zero)
                 {
@@ -45,9 +45,9 @@
                 {
                     var indexSelecionado = dataGridView1.CurrentCell.RowIndex;
                     var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
+                    repositorPessoa.AtualizarPessoa(clienteSelecionado);
                     var tela_Cadastro = new Tela_Cadastro(clienteSelecionado);
                     var resultado = tela_Cadastro.ShowDialog();
-
                     if (resultado == DialogResult.OK)
                     {
                         dataGridView1.DataSource = null;
@@ -65,7 +65,7 @@
         {
             try
             {
-                List<Pessoa> listaDePessoas = repositorPessoa.ObterTodasPessoas();
+                var listaDePessoas = repositorPessoa.ObterTodasPessoas();
 
                 if (listaDePessoas.Count == decimal.Zero)
                 {

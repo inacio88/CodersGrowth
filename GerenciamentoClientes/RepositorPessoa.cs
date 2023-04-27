@@ -11,8 +11,7 @@ namespace GerenciamentoClientes
         protected List<Pessoa> listaDePessoas = ListaPessoasSingleTon.obterInstancia();
 
         public List<Pessoa> ObterTodasPessoas()
-        {
-            
+        {            
             return listaDePessoas;
         }
 
@@ -22,13 +21,13 @@ namespace GerenciamentoClientes
         }
         public void RemoverPessoa(int Id)
         {
-            Pessoa pessoa = ObterPessoaPorId(Id);
+            var pessoa = ObterPessoaPorId(Id);
 
             listaDePessoas.Remove(pessoa);
         }
         public Pessoa ObterPessoaPorId(int Id)
         {
-            Pessoa pessoaBuscada = listaDePessoas.Find(x => x.Id == Id);
+            var pessoaBuscada = listaDePessoas.Find(x => x.Id == Id);
 
             return pessoaBuscada;
         }
