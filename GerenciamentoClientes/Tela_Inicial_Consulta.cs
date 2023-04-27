@@ -3,7 +3,7 @@
 
     public partial class Tela_Inicial_Consulta : Form
     {
-        List<Pessoa> listaDePessoas = ListaPessoasSingleTon.obterInstancia();
+        RepositorPessoa repositorPessoa = new RepositorPessoa();
         public Tela_Inicial_Consulta()
         {
             InitializeComponent();
@@ -14,14 +14,14 @@
         {
             try
             {
-                var tela_cad = new Tela_Cadastro(null);
-                var resultado = tela_cad.ShowDialog(null);
+                var telaCadastro = new Tela_Cadastro(null);
+                var resultado = telaCadastro.ShowDialog(null);
                 if (resultado == DialogResult.OK)
                 {
-                    listaDePessoas.Add(tela_cad.pessoa);
+                    repositorPessoa.CriarPessoa(telaCadastro.pessoa);
                 }
                 dataGridView1.DataSource = null;
-                dataGridView1.DataSource = listaDePessoas;
+                dataGridView1.DataSource = repositorPessoa.ObterTodasPessoas();
 
             }
             catch
@@ -35,6 +35,8 @@
         {
             try
             {
+                var listaDePessoas = repositorPessoa.ObterTodasPessoas();
+
                 if (listaDePessoas.Count == decimal.Zero)
                 {
                     MessageBox.Show("Não há nada selecionado", "Vazio", MessageBoxButtons.OK);
@@ -43,6 +45,7 @@
                 {
                     var indexSelecionado = dataGridView1.CurrentCell.RowIndex;
                     var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
+                    repositorPessoa.AtualizarPessoa(clienteSelecionado);
                     var tela_Cadastro = new Tela_Cadastro(clienteSelecionado);
                     var resultado = tela_Cadastro.ShowDialog();
                     if (resultado == DialogResult.OK)
@@ -62,6 +65,7 @@
         {
             try
             {
+                var listaDePessoas = repositorPessoa.ObterTodasPessoas();
 
                 if (listaDePessoas.Count == decimal.Zero)
                 {
@@ -75,7 +79,7 @@
 
                     if (result == DialogResult.Yes)
                     {
-                        listaDePessoas.Remove(clienteSelecionado);
+                        repositorPessoa.RemoverPessoa(clienteSelecionado.Id);
                         dataGridView1.DataSource = null;
                         dataGridView1.DataSource = listaDePessoas;
                     }
