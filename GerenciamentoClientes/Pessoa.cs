@@ -12,7 +12,12 @@ namespace GerenciamentoClientes
             Pessoa.RefenciaId = Pessoa.RefenciaId + IncrementoID;
             return Pessoa.RefenciaId;
         }
-        
+
+        public object ShallowCopy()
+        {
+            return this.MemberwiseClone();
+        }
+
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }

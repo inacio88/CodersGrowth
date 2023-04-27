@@ -33,9 +33,13 @@ namespace GerenciamentoClientes
             return pessoaBuscada;
         }
 
-        public void AtualizarPessoa(int Id)
+        public Pessoa AtualizarPessoa(Pessoa pessoa)
         {
-            Pessoa pessoaBuscada = ObterPessoaPorId(Id);
+            var pessoaBuscada = (Pessoa)ObterPessoaPorId(pessoa.Id).ShallowCopy();
+
+            pessoaBuscada = pessoa;
+
+            return pessoaBuscada;
         }
     }
 }

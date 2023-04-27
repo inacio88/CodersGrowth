@@ -47,6 +47,7 @@
                     var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
                     var tela_Cadastro = new Tela_Cadastro(clienteSelecionado);
                     var resultado = tela_Cadastro.ShowDialog();
+                    repositorPessoa.AtualizarPessoa(tela_Cadastro.pessoa);
                     if (resultado == DialogResult.OK)
                     {
                         dataGridView1.DataSource = null;
