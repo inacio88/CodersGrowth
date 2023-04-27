@@ -29,8 +29,8 @@ build/
 */resharper*/**/cache/
 
 # Local configuration files
-*.config
-*.config.user
+#*.config
+#*.config.user
 
 # Other generated files
 [Tt]humbs.db
