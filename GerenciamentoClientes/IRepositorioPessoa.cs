@@ -13,7 +13,7 @@ namespace GerenciamentoClientes
         public void RemoverPessoa(int Id);
         public Pessoa ObterPessoaPorId(int Id);
 
-        public void AtualizarPessoa(int Id);
+        public Pessoa AtualizarPessoa(Pessoa pessoa);
 
     }
 }
