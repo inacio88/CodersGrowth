@@ -33,7 +33,7 @@ namespace GerenciamentoClientes
             return pessoaBuscada;
         }
 
-        public Pessoa AtualizarPessoa(Pessoa pessoa)
+        public void AtualizarPessoa(int Id)
         {
             var pessoaBuscada = ObterPessoaPorId(pessoa.Id);
 
