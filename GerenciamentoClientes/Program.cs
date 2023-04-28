@@ -30,7 +30,7 @@ namespace GerenciamentoClientes
                 .ConfigureRunner(rb => rb
                     .AddSqlServer()
                     .WithGlobalConnectionString(StringDeConexao)
-                    .ScanIn(typeof(AddPessoaTable).Assembly).For.Migrations())
+                    .ScanIn(typeof(AlterarColunaPessoaTabela).Assembly).For.Migrations())
                 .AddLogging(lb => lb.AddFluentMigratorConsole())
                 .BuildServiceProvider(false);
         }

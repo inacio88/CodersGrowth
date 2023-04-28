@@ -3,7 +3,7 @@
 namespace GerenciamentoClientes
 {
     [Migration(20230428100800)]
-    public class AddPessoaTable : Migration
+    public class AdicionarPessoaTabela : Migration
     {
         public override void Up()
         {
