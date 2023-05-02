@@ -21,6 +21,7 @@
                 if (resultado == DialogResult.OK)
                 {
                     repositorPessoa.CriarPessoa(telaCadastro.pessoa);
+                    repositorioSql.CriarPessoa(telaCadastro.pessoa);
                 }
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = repositorPessoa.ObterTodasPessoas();

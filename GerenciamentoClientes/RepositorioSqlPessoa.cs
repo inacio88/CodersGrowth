@@ -20,8 +20,8 @@ namespace GerenciamentoClientes
         {
             sqlConexao.Open();
 
-            SqlCommand comando = new SqlCommand("SELECT * FROM pessoas", sqlConexao);
-            //SqlDataReader dataReader = comando.ExecuteReader();
+            SqlCommand comando = new SqlCommand("SELECT * FROM pessoa", sqlConexao);
+            SqlDataReader dataReader = comando.ExecuteReader();
 
             sqlConexao.Close();
 
@@ -30,6 +30,19 @@ namespace GerenciamentoClientes
 
         public void CriarPessoa(Pessoa pessoa)
         {
+            sqlConexao.Open();
+            string incluiSQL = @"INSERT INTO pessoa (Nome, Email, DataNascimento, CPF) VALUES ("+
+            "'"+pessoa.Nome + "','" +
+            pessoa.Email + "','" +
+            pessoa.DataNascimento + "','" +
+            pessoa.Cpf + 
+            "')";
+            //incluiSQL = "INSERT INTO pessoa (Nome, Email, DataNascimento, CPF) VALUES ('inacio','inaio@email.com','02/02/2000 00:00:00','222.222.222-22')";
+            SqlCommand comando = new SqlCommand(incluiSQL, sqlConexao);
+            comando.ExecuteNonQuery();
+
+            sqlConexao.Close();
+            
             listaDePessoas.Add(pessoa);
         }
         public void RemoverPessoa(int Id)
