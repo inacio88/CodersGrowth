@@ -4,6 +4,7 @@
     public partial class Tela_Inicial_Consulta : Form
     {
         RepositorPessoa repositorPessoa = new RepositorPessoa();
+        RepositorioSqlPessoa repositorioSql = new RepositorioSqlPessoa();
         public Tela_Inicial_Consulta()
         {
             InitializeComponent();
@@ -14,6 +15,7 @@
         {
             try
             {
+                repositorioSql.ObterTodasPessoas();
                 var telaCadastro = new Tela_Cadastro(null);
                 var resultado = telaCadastro.ShowDialog(null);
                 if (resultado == DialogResult.OK)

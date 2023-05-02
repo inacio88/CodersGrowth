@@ -3,15 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
+using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace GerenciamentoClientes
 {
     internal class RepositorioSqlPessoa : IRepositorioPessoa
     {
         protected List<Pessoa> listaDePessoas = ListaPessoasSingleTon.obterInstancia();
+        private static string connectionString = "Data Source=INVENT018;Initial Catalog=bancoDeDadosCG;User ID=sa;Password=sap@123";
+        SqlConnection sqlConexao = new SqlConnection(connectionString);
+
 
         public List<Pessoa> ObterTodasPessoas()
         {
+            sqlConexao.Open();
+
+            SqlCommand comando = new SqlCommand("SELECT * FROM pessoas", sqlConexao);
+            //SqlDataReader dataReader = comando.ExecuteReader();
+
+            sqlConexao.Close();
+
             return listaDePessoas;
         }
 
