@@ -15,16 +15,15 @@
         {
             try
             {
-                repositorioSql.ObterTodasPessoas();
+                
                 var telaCadastro = new Tela_Cadastro(null);
                 var resultado = telaCadastro.ShowDialog(null);
                 if (resultado == DialogResult.OK)
                 {
-                    repositorPessoa.CriarPessoa(telaCadastro.pessoa);
                     repositorioSql.CriarPessoa(telaCadastro.pessoa);
                 }
                 dataGridView1.DataSource = null;
-                dataGridView1.DataSource = repositorPessoa.ObterTodasPessoas();
+                dataGridView1.DataSource = repositorioSql.ObterTodasPessoas();
 
             }
             catch

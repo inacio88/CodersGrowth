@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
+using System.Data.Common;
 
 namespace GerenciamentoClientes
 {
@@ -18,12 +19,34 @@ namespace GerenciamentoClientes
 
         public List<Pessoa> ObterTodasPessoas()
         {
-            sqlConexao.Open();
-
-            SqlCommand comando = new SqlCommand("SELECT * FROM pessoa", sqlConexao);
-            SqlDataReader dataReader = comando.ExecuteReader();
-
-            sqlConexao.Close();
+            try
+            {
+                sqlConexao.Open();
+                SqlCommand comando = new SqlCommand("SELECT * FROM pessoa", sqlConexao);
+                comando.CommandType = CommandType.Text;
+                SqlDataReader dataReader = comando.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    listaDePessoas.Add(new Pessoa()
+                    {
+                        Id = Convert.ToInt32(dataReader["Id"]),
+                        Nome = dataReader["Nome"].ToString(),
+                        Email = dataReader["Email"].ToString(),
+                        DataNascimento = Convert.ToDateTime(dataReader["DataNascimento"].ToString()),
+                        Cpf = dataReader["CPF"].ToString(),
+                    });
+                }
+                dataReader.Close();
+                return listaDePessoas;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConexao.Close();
+            }
 
             return listaDePessoas;
         }
@@ -31,19 +54,20 @@ namespace GerenciamentoClientes
         public void CriarPessoa(Pessoa pessoa)
         {
             sqlConexao.Open();
+            
             string incluiSQL = @"INSERT INTO pessoa (Nome, Email, DataNascimento, CPF) VALUES ("+
             "'"+pessoa.Nome + "','" +
             pessoa.Email + "','" +
             pessoa.DataNascimento + "','" +
             pessoa.Cpf + 
             "')";
-            //incluiSQL = "INSERT INTO pessoa (Nome, Email, DataNascimento, CPF) VALUES ('inacio','inaio@email.com','02/02/2000 00:00:00','222.222.222-22')";
+            
             SqlCommand comando = new SqlCommand(incluiSQL, sqlConexao);
+            
             comando.ExecuteNonQuery();
 
             sqlConexao.Close();
-            
-            listaDePessoas.Add(pessoa);
+
         }
         public void RemoverPessoa(int Id)
         {
