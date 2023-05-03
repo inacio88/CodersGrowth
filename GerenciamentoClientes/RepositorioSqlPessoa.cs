@@ -12,13 +12,17 @@ namespace GerenciamentoClientes
 {
     internal class RepositorioSqlPessoa : IRepositorioPessoa
     {
-        protected List<Pessoa> listaDePessoas = ListaPessoasSingleTon.obterInstancia();
         private static string connectionString = "Data Source=INVENT018;Initial Catalog=bancoDeDadosCG;User ID=sa;Password=sap@123";
         SqlConnection sqlConexao = new SqlConnection(connectionString);
-
+        protected List<Pessoa> listaDePessoas = new List<Pessoa>();
 
         public List<Pessoa> ObterTodasPessoas()
         {
+            if (listaDePessoas.Count() != decimal.Zero)
+            {
+                listaDePessoas = new List<Pessoa>();
+            }
+
             try
             {
                 sqlConexao.Open();
