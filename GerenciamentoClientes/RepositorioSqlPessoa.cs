@@ -83,9 +83,22 @@ namespace GerenciamentoClientes
         }
         public void RemoverPessoa(int Id)
         {
-            var pessoa = ObterPessoaPorId(Id);
-
-            listaDePessoas.Remove(pessoa);
+            try
+            {
+                sqlConexao.Open();
+                string deletarSQL = "DELETE FROM pessoa WHERE Id=" + Id;
+                SqlCommand comando = new SqlCommand(deletarSQL, sqlConexao);
+                comando.CommandType = CommandType.Text;
+                comando.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConexao.Close();
+            }
         }
         public Pessoa ObterPessoaPorId(int Id)
         {

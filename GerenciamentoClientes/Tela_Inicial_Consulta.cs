@@ -8,6 +8,8 @@
         public Tela_Inicial_Consulta()
         {
             InitializeComponent();
+            dataGridView1.DataSource = null;
+            dataGridView1.DataSource = repositorioSql.ObterTodasPessoas();
 
         }
 
@@ -37,7 +39,7 @@
         {
             try
             {
-                var listaDePessoas = repositorPessoa.ObterTodasPessoas();
+                var listaDePessoas = repositorioSql.ObterTodasPessoas();
 
                 if (listaDePessoas.Count == decimal.Zero)
                 {
@@ -67,7 +69,7 @@
         {
             try
             {
-                var listaDePessoas = repositorPessoa.ObterTodasPessoas();
+                var listaDePessoas = repositorioSql.ObterTodasPessoas();
 
                 if (listaDePessoas.Count == decimal.Zero)
                 {
@@ -81,9 +83,9 @@
 
                     if (result == DialogResult.Yes)
                     {
-                        repositorPessoa.RemoverPessoa(clienteSelecionado.Id);
+                        repositorioSql.RemoverPessoa(clienteSelecionado.Id);
                         dataGridView1.DataSource = null;
-                        dataGridView1.DataSource = listaDePessoas;
+                        dataGridView1.DataSource = repositorioSql.ObterTodasPessoas();
                     }
                 }
             }
