@@ -3,13 +3,13 @@
 
     public partial class Tela_Inicial_Consulta : Form
     {
-        RepositorPessoa repositorPessoa = new RepositorPessoa();
+        RepositorListaPessoa repositorPessoa = new RepositorListaPessoa();
         RepositorioSqlPessoa repositorioSql = new RepositorioSqlPessoa();
         public Tela_Inicial_Consulta()
         {
             InitializeComponent();
-            dataGridView1.DataSource = null;
-            dataGridView1.DataSource = repositorioSql.ObterTodasPessoas();
+            dataGridViewListaPessoa.DataSource = null;
+            dataGridViewListaPessoa.DataSource = repositorioSql.ObterTodasPessoas();
 
         }
 
@@ -24,8 +24,8 @@
                 {
                     repositorioSql.CriarPessoa(telaCadastro.pessoa);
                 }
-                dataGridView1.DataSource = null;
-                dataGridView1.DataSource = repositorioSql.ObterTodasPessoas();
+                dataGridViewListaPessoa.DataSource = null;
+                dataGridViewListaPessoa.DataSource = repositorioSql.ObterTodasPessoas();
 
             }
             catch
@@ -47,15 +47,15 @@
                 }
                 else
                 {
-                    var indexSelecionado = dataGridView1.CurrentCell.RowIndex;
-                    var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
+                    var indexSelecionado = dataGridViewListaPessoa.CurrentCell.RowIndex;
+                    var clienteSelecionado = dataGridViewListaPessoa.Rows[indexSelecionado].DataBoundItem as Pessoa;
                     var tela_Cadastro = new Tela_Cadastro(clienteSelecionado);
                     var resultado = tela_Cadastro.ShowDialog();
                     repositorioSql.AtualizarPessoa(tela_Cadastro.pessoa);
                     if (resultado == DialogResult.OK)
                     {
-                        dataGridView1.DataSource = null;
-                        dataGridView1.DataSource = repositorioSql.ObterTodasPessoas();
+                        dataGridViewListaPessoa.DataSource = null;
+                        dataGridViewListaPessoa.DataSource = repositorioSql.ObterTodasPessoas();
                     }
                 }
             }
@@ -77,15 +77,15 @@
                 }
                 else
                 {
-                    var indexSelecionado = dataGridView1.CurrentCell.RowIndex;
-                    var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
+                    var indexSelecionado = dataGridViewListaPessoa.CurrentCell.RowIndex;
+                    var clienteSelecionado = dataGridViewListaPessoa.Rows[indexSelecionado].DataBoundItem as Pessoa;
                     DialogResult result = MessageBox.Show("Deseja excluir selecionado?", "Excluir", MessageBoxButtons.YesNo);
 
                     if (result == DialogResult.Yes)
                     {
                         repositorioSql.RemoverPessoa(clienteSelecionado.Id);
-                        dataGridView1.DataSource = null;
-                        dataGridView1.DataSource = repositorioSql.ObterTodasPessoas();
+                        dataGridViewListaPessoa.DataSource = null;
+                        dataGridViewListaPessoa.DataSource = repositorioSql.ObterTodasPessoas();
                     }
                 }
             }

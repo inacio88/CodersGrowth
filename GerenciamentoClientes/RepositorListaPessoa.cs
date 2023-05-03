@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GerenciamentoClientes
 {
-    internal class RepositorPessoa : IRepositorioPessoa
+    internal class RepositorListaPessoa : IRepositorioPessoa
     {
         protected List<Pessoa> listaDePessoas = ListaPessoasSingleTon.obterInstancia();
 

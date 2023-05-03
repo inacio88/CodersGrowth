@@ -7,12 +7,13 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 using System.Data.Common;
+using System.Configuration;
 
 namespace GerenciamentoClientes
 {
     internal class RepositorioSqlPessoa : IRepositorioPessoa
     {
-        private static string connectionString = "Data Source=INVENT018;Initial Catalog=bancoDeDadosCG;User ID=sa;Password=sap@123";
+        private static string connectionString = ConfigurationManager.ConnectionStrings["invent018.bancoDeDadosCG.dbo"].ConnectionString;
         SqlConnection sqlConexao = new SqlConnection(connectionString);
         protected List<Pessoa> listaDePessoas = new List<Pessoa>();
 
@@ -59,16 +60,13 @@ namespace GerenciamentoClientes
         {
             try{ 
                 sqlConexao.Open();
-            
-                string incluiSQL = @"INSERT INTO pessoa (Nome, Email, DataNascimento, CPF) VALUES ("+
-                "'"+pessoa.Nome + "','" +
-                pessoa.Email + "','" +
-                pessoa.DataNascimento + "','" +
-                pessoa.Cpf + 
-                "')";
-            
+
+                string incluiSQL = @"INSERT INTO pessoa (Nome, Email, DataNascimento, CPF) VALUES (@Nome, @Email, @DataNascimento, @CPF)";
                 SqlCommand comando = new SqlCommand(incluiSQL, sqlConexao);
-            
+                comando.Parameters.AddWithValue("@Nome", pessoa.Nome);
+                comando.Parameters.AddWithValue("@Email", pessoa.Email);
+                comando.Parameters.AddWithValue("@DataNascimento", pessoa.DataNascimento);
+                comando.Parameters.AddWithValue("@CPF", pessoa.Cpf);
                 comando.ExecuteNonQuery();
             }
             catch (Exception ex)
@@ -142,14 +140,15 @@ namespace GerenciamentoClientes
             try
             {
                 sqlConexao.Open();
-                string atualizaSQL = "UPDATE pessoa SET "+
-                    "Nome='"+pessoa.Nome+"',"+
-                    "Email='" + pessoa.Email + "'," +
-                    "DataNascimento='" + pessoa.DataNascimento+ "'," +
-                    "CPF='" + pessoa.Cpf + "'" +
-                    "WHERE Id=" + Id;
+                string atualizaSQL = "UPDATE pessoa SET Nome=@Nome, Email=@Email, DataNascimento=@DataNascimento, CPF=@CPF WHERE Id=@Id";
                 SqlCommand comando = new SqlCommand(atualizaSQL, sqlConexao);
                 comando.CommandType = CommandType.Text;
+                comando.Parameters.AddWithValue("@Nome", pessoa.Nome);
+                comando.Parameters.AddWithValue("@Email", pessoa.Email);
+                comando.Parameters.AddWithValue("@DataNascimento", pessoa.DataNascimento);
+                comando.Parameters.AddWithValue("@CPF", pessoa.Cpf);
+                comando.Parameters.AddWithValue("@Id", pessoa.Id);
+
                 comando.ExecuteNonQuery();
             }
             catch (Exception ex)
