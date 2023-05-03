@@ -57,20 +57,28 @@ namespace GerenciamentoClientes
 
         public void CriarPessoa(Pessoa pessoa)
         {
-            sqlConexao.Open();
+            try{ 
+                sqlConexao.Open();
             
-            string incluiSQL = @"INSERT INTO pessoa (Nome, Email, DataNascimento, CPF) VALUES ("+
-            "'"+pessoa.Nome + "','" +
-            pessoa.Email + "','" +
-            pessoa.DataNascimento + "','" +
-            pessoa.Cpf + 
-            "')";
+                string incluiSQL = @"INSERT INTO pessoa (Nome, Email, DataNascimento, CPF) VALUES ("+
+                "'"+pessoa.Nome + "','" +
+                pessoa.Email + "','" +
+                pessoa.DataNascimento + "','" +
+                pessoa.Cpf + 
+                "')";
             
-            SqlCommand comando = new SqlCommand(incluiSQL, sqlConexao);
+                SqlCommand comando = new SqlCommand(incluiSQL, sqlConexao);
             
-            comando.ExecuteNonQuery();
-
-            sqlConexao.Close();
+                comando.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConexao.Close();
+            }
 
         }
         public void RemoverPessoa(int Id)
@@ -81,8 +89,36 @@ namespace GerenciamentoClientes
         }
         public Pessoa ObterPessoaPorId(int Id)
         {
-            var pessoaBuscada = listaDePessoas.Find(x => x.Id == Id);
-
+            var pessoaBuscada = new Pessoa();
+            try
+            {
+                sqlConexao.Open();
+                string pesquisaSQL = "SELECT * FROM pessoa WHERE Id="+Id;
+                SqlCommand comando = new SqlCommand(pesquisaSQL, sqlConexao);
+                comando.CommandType = CommandType.Text;
+                SqlDataReader dataReader = comando.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    pessoaBuscada = new Pessoa()
+                    {
+                        Id = Convert.ToInt32(dataReader["Id"]),
+                        Nome = dataReader["Nome"].ToString(),
+                        Email = dataReader["Email"].ToString(),
+                        DataNascimento = Convert.ToDateTime(dataReader["DataNascimento"].ToString()),
+                        Cpf = dataReader["CPF"].ToString(),
+                    };
+                }
+                dataReader.Close();
+        
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConexao.Close();
+            }
             return pessoaBuscada;
         }
 
