@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             Btn_Novo = new Button();
-            dataGridView1 = new DataGridView();
+            dataGridViewListaPessoa = new DataGridView();
             Btn_Editar = new Button();
             Btn_Excluir = new Button();
             Lbl_Titulo = new Label();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewListaPessoa).BeginInit();
             SuspendLayout();
             // 
             // Btn_Novo
@@ -47,14 +47,14 @@
             Btn_Novo.UseVisualStyleBackColor = true;
             Btn_Novo.Click += AoClicarEmNovo;
             // 
-            // dataGridView1
+            // dataGridViewListaPessoa
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(21, 68);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(690, 342);
-            dataGridView1.TabIndex = 1;
+            dataGridViewListaPessoa.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewListaPessoa.Location = new Point(21, 68);
+            dataGridViewListaPessoa.Name = "dataGridViewListaPessoa";
+            dataGridViewListaPessoa.RowTemplate.Height = 25;
+            dataGridViewListaPessoa.Size = new Size(690, 342);
+            dataGridViewListaPessoa.TabIndex = 1;
             // 
             // Btn_Editar
             // 
@@ -96,11 +96,11 @@
             Controls.Add(Lbl_Titulo);
             Controls.Add(Btn_Excluir);
             Controls.Add(Btn_Editar);
-            Controls.Add(dataGridView1);
+            Controls.Add(dataGridViewListaPessoa);
             Controls.Add(Btn_Novo);
             Name = "Tela_Inicial_Consulta";
             Text = "Tela_Inicial_Nova";
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewListaPessoa).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -108,7 +108,7 @@
         #endregion
 
         private Button Btn_Novo;
-        private DataGridView dataGridView1;
+        private DataGridView dataGridViewListaPessoa;
         private Button Btn_Editar;
         private Button Btn_Excluir;
         private Label Lbl_Titulo;
