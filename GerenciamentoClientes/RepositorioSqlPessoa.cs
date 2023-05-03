@@ -137,11 +137,32 @@ namespace GerenciamentoClientes
 
         public Pessoa AtualizarPessoa(Pessoa pessoa)
         {
-            var pessoaBuscada = ObterPessoaPorId(pessoa.Id);
+            var Id = pessoa.Id;
+            
+            try
+            {
+                sqlConexao.Open();
+                string atualizaSQL = "UPDATE pessoa SET "+
+                    "Nome='"+pessoa.Nome+"',"+
+                    "Email='" + pessoa.Email + "'," +
+                    "DataNascimento='" + pessoa.DataNascimento+ "'," +
+                    "CPF='" + pessoa.Cpf + "'" +
+                    "WHERE Id=" + Id;
+                SqlCommand comando = new SqlCommand(atualizaSQL, sqlConexao);
+                comando.CommandType = CommandType.Text;
+                comando.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConexao.Close();
+            }
 
-            pessoaBuscada = pessoa;
-
-            return pessoaBuscada;
+            pessoa = ObterPessoaPorId(Id);
+            return pessoa;
         }
     }
 }

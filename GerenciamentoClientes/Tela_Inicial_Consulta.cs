@@ -49,13 +49,13 @@
                 {
                     var indexSelecionado = dataGridView1.CurrentCell.RowIndex;
                     var clienteSelecionado = dataGridView1.Rows[indexSelecionado].DataBoundItem as Pessoa;
-                    repositorPessoa.AtualizarPessoa(clienteSelecionado);
                     var tela_Cadastro = new Tela_Cadastro(clienteSelecionado);
                     var resultado = tela_Cadastro.ShowDialog();
+                    repositorioSql.AtualizarPessoa(tela_Cadastro.pessoa);
                     if (resultado == DialogResult.OK)
                     {
                         dataGridView1.DataSource = null;
-                        dataGridView1.DataSource = listaDePessoas;
+                        dataGridView1.DataSource = repositorioSql.ObterTodasPessoas();
                     }
                 }
             }
