@@ -3,13 +3,13 @@
 
     public partial class Tela_Inicial_Consulta : Form
     {
-        RepositorListaPessoa repositorPessoa = new RepositorListaPessoa();
-        RepositorioSqlPessoa repositorioSql = new RepositorioSqlPessoa();
-        public Tela_Inicial_Consulta()
+        private readonly IRepositorioPessoa _repositorioPessoa;
+        public Tela_Inicial_Consulta(IRepositorioPessoa repositorioPessoa)
         {
             InitializeComponent();
+            _repositorioPessoa = repositorioPessoa;
             dataGridViewListaPessoa.DataSource = null;
-            dataGridViewListaPessoa.DataSource = repositorioSql.ObterTodasPessoas();
+            dataGridViewListaPessoa.DataSource = repositorioPessoa.ObterTodasPessoas();
 
         }
 
@@ -22,10 +22,10 @@
                 var resultado = telaCadastro.ShowDialog(null);
                 if (resultado == DialogResult.OK)
                 {
-                    repositorioSql.CriarPessoa(telaCadastro.pessoa);
+                    _repositorioPessoa.CriarPessoa(telaCadastro.pessoa);
                 }
                 dataGridViewListaPessoa.DataSource = null;
-                dataGridViewListaPessoa.DataSource = repositorioSql.ObterTodasPessoas();
+                dataGridViewListaPessoa.DataSource = _repositorioPessoa.ObterTodasPessoas();
 
             }
             catch
@@ -39,7 +39,7 @@
         {
             try
             {
-                var listaDePessoas = repositorioSql.ObterTodasPessoas();
+                var listaDePessoas = _repositorioPessoa.ObterTodasPessoas();
 
                 if (listaDePessoas.Count == decimal.Zero)
                 {
@@ -51,11 +51,11 @@
                     var clienteSelecionado = dataGridViewListaPessoa.Rows[indexSelecionado].DataBoundItem as Pessoa;
                     var tela_Cadastro = new Tela_Cadastro(clienteSelecionado);
                     var resultado = tela_Cadastro.ShowDialog();
-                    repositorioSql.AtualizarPessoa(tela_Cadastro.pessoa);
+                    _repositorioPessoa.AtualizarPessoa(tela_Cadastro.pessoa);
                     if (resultado == DialogResult.OK)
                     {
                         dataGridViewListaPessoa.DataSource = null;
-                        dataGridViewListaPessoa.DataSource = repositorioSql.ObterTodasPessoas();
+                        dataGridViewListaPessoa.DataSource = _repositorioPessoa.ObterTodasPessoas();
                     }
                 }
             }
@@ -69,7 +69,7 @@
         {
             try
             {
-                var listaDePessoas = repositorioSql.ObterTodasPessoas();
+                var listaDePessoas = _repositorioPessoa.ObterTodasPessoas();
 
                 if (listaDePessoas.Count == decimal.Zero)
                 {
@@ -83,9 +83,9 @@
 
                     if (result == DialogResult.Yes)
                     {
-                        repositorioSql.RemoverPessoa(clienteSelecionado.Id);
+                        _repositorioPessoa.RemoverPessoa(clienteSelecionado.Id);
                         dataGridViewListaPessoa.DataSource = null;
-                        dataGridViewListaPessoa.DataSource = repositorioSql.ObterTodasPessoas();
+                        dataGridViewListaPessoa.DataSource = _repositorioPessoa.ObterTodasPessoas();
                     }
                 }
             }
