@@ -4,6 +4,7 @@ using System.Linq;
 using FluentMigrator.Runner;
 using FluentMigrator.Runner.Initialization;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace GerenciamentoClientes
 {
@@ -14,6 +15,9 @@ namespace GerenciamentoClientes
         [STAThread]
         static void Main()
         {
+            var builder = CriaHostBuilder();
+            var servicesProvider = builder.Build().Services;
+            var repositorio = servicesProvider.GetService<IRepositorioPessoa>();
             using (var serviceProvider = CreateServices())
             using (var scope = serviceProvider.CreateScope())
             {
@@ -21,7 +25,14 @@ namespace GerenciamentoClientes
             }
 
             ApplicationConfiguration.Initialize();
-            Application.Run(new Tela_Inicial_Consulta());
+            Application.Run(new Tela_Inicial_Consulta(repositorio));
+        }
+        static IHostBuilder CriaHostBuilder()
+        {
+            return Host.CreateDefaultBuilder()
+                .ConfigureServices((context, services) => {
+                    services.AddScoped<IRepositorioPessoa, RepositorioSqlPessoa>();
+                });
         }
         private static ServiceProvider CreateServices()
         {
