@@ -1,8 +1,6 @@
-using System;
 using System.Configuration;
-using System.Linq;
 using FluentMigrator.Runner;
-using FluentMigrator.Runner.Initialization;
+using Infraestrutura;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 

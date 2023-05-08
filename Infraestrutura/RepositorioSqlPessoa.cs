@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
-using System.Data.SqlClient;
-using Microsoft.Data.SqlClient;
-using System.Data.Common;
 using System.Configuration;
+using Microsoft.Data.SqlClient;
+using Dominio;
 
-namespace GerenciamentoClientes
+namespace Infraestrutura
 {
-    internal class RepositorioSqlPessoa : IRepositorioPessoa
+    public class RepositorioSqlPessoa : IRepositorioPessoa
     {
         private static string connectionString = ConfigurationManager.ConnectionStrings["invent018.bancoDeDadosCG.dbo"].ConnectionString;
         SqlConnection sqlConexao = new SqlConnection(connectionString);

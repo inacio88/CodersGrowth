@@ -1,4 +1,7 @@
-﻿namespace GerenciamentoClientes
+﻿using Dominio;
+using Infraestrutura;
+
+namespace GerenciamentoClientes
 {
 
     public partial class Tela_Inicial_Consulta : Form

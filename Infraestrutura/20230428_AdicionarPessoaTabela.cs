@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace GerenciamentoClientes
+namespace Infraestrutura
 {
     [Migration(20230428100800)]
     public class AdicionarPessoaTabela : Migration

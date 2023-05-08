@@ -1,6 +1,6 @@
 ﻿using FluentMigrator;
 
-namespace GerenciamentoClientes
+namespace Infraestrutura
 {
     [Migration(20230428113300)]
     public class AlterarColunaPessoaTabela : Migration
