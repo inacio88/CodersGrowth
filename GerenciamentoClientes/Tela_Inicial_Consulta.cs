@@ -6,14 +6,15 @@ namespace GerenciamentoClientes
 
     public partial class Tela_Inicial_Consulta : Form
     {
-        private readonly IRepositorioPessoa _repositorioPessoa;
-        public Tela_Inicial_Consulta(IRepositorioPessoa repositorioPessoa)
+        public IRepositorioPessoa _repositorioPessoa;
+        private readonly ValidacaoPessoa _validacao;
+        public Tela_Inicial_Consulta(IRepositorioPessoa repositorioPessoa, ValidacaoPessoa validacao)
         {
             InitializeComponent();
             _repositorioPessoa = repositorioPessoa;
             dataGridViewListaPessoa.DataSource = null;
             dataGridViewListaPessoa.DataSource = repositorioPessoa.ObterTodasPessoas();
-
+            _validacao = validacao;
         }
 
         private void AoClicarEmNovo(object sender, EventArgs e)
@@ -23,9 +24,14 @@ namespace GerenciamentoClientes
                 
                 var telaCadastro = new Tela_Cadastro(null);
                 var resultado = telaCadastro.ShowDialog(null);
-                if (resultado == DialogResult.OK)
+                var resultadoValidacao = _validacao.Validate(telaCadastro.pessoa);
+                if (resultado == DialogResult.OK && resultadoValidacao.IsValid)
                 {
                     _repositorioPessoa.CriarPessoa(telaCadastro.pessoa);
+                }
+                if (!resultadoValidacao.IsValid)
+                {
+                    MessageBox.Show(resultadoValidacao.ToString(), "Erro", MessageBoxButtons.OK);
                 }
                 dataGridViewListaPessoa.DataSource = null;
                 dataGridViewListaPessoa.DataSource = _repositorioPessoa.ObterTodasPessoas();
@@ -54,12 +60,20 @@ namespace GerenciamentoClientes
                     var clienteSelecionado = dataGridViewListaPessoa.Rows[indexSelecionado].DataBoundItem as Pessoa;
                     var tela_Cadastro = new Tela_Cadastro(clienteSelecionado);
                     var resultado = tela_Cadastro.ShowDialog();
-                    _repositorioPessoa.AtualizarPessoa(tela_Cadastro.pessoa);
-                    if (resultado == DialogResult.OK)
+                    var resultadoValidacao = _validacao.Validate(tela_Cadastro.pessoa);
+                    if (resultado == DialogResult.OK && resultadoValidacao.IsValid)
                     {
-                        dataGridViewListaPessoa.DataSource = null;
-                        dataGridViewListaPessoa.DataSource = _repositorioPessoa.ObterTodasPessoas();
+                        _repositorioPessoa.AtualizarPessoa(tela_Cadastro.pessoa);
+                        MessageBox.Show("Salvo com sucesso!", "Sucesso", MessageBoxButtons.OK);
                     }
+                    if (!resultadoValidacao.IsValid)
+                    {
+                        MessageBox.Show(resultadoValidacao.ToString(), "Erro", MessageBoxButtons.OK);
+                    }
+
+
+                    dataGridViewListaPessoa.DataSource = null;
+                    dataGridViewListaPessoa.DataSource = _repositorioPessoa.ObterTodasPessoas();
                 }
             }
             catch
