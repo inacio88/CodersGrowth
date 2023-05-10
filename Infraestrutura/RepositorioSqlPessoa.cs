@@ -49,8 +49,6 @@ namespace Infraestrutura
             {
                 sqlConexao.Close();
             }
-
-            return listaDePessoas;
         }
 
         public void CriarPessoa(Pessoa pessoa)
@@ -159,6 +157,42 @@ namespace Infraestrutura
 
             pessoa = ObterPessoaPorId(Id);
             return pessoa;
+        }
+
+        public Pessoa ObterPessoaPorCpf(string Cpf)
+        {
+            var pessoaBuscada = new Pessoa();
+            try
+            {
+                sqlConexao.Open();
+                string pesquisaSQL = "SELECT * FROM pessoa WHERE CPF=@CPF";
+                SqlCommand comando = new SqlCommand(pesquisaSQL, sqlConexao);
+                comando.CommandType = CommandType.Text;
+                comando.Parameters.AddWithValue("@CPF", Cpf);
+                SqlDataReader dataReader = comando.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    pessoaBuscada = new Pessoa()
+                    {
+                        Id = Convert.ToInt32(dataReader["Id"]),
+                        Nome = dataReader["Nome"].ToString(),
+                        Email = dataReader["Email"].ToString(),
+                        DataNascimento = Convert.ToDateTime(dataReader["DataNascimento"].ToString()),
+                        Cpf = dataReader["CPF"].ToString(),
+                    };
+                }
+                dataReader.Close();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConexao.Close();
+            }
+            return pessoaBuscada;
         }
     }
 }

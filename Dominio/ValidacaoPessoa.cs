@@ -5,21 +5,23 @@ namespace Dominio
 {
     public class ValidacaoPessoa : AbstractValidator<Pessoa>
     {
-        public ValidacaoPessoa()
+        IRepositorioPessoa _pessoa;
+        public ValidacaoPessoa(IRepositorioPessoa pessoa)
         {
+            _pessoa = pessoa;
             RuleFor(pessoa => pessoa.Nome).NotEmpty().Length(1, 50).Matches(@"^[a-zA-ZÀ-ÖØ-öø-ÿ ]+$").WithMessage("Erro no nome");
             RuleFor(pessoa => pessoa.Email).NotEmpty().Length(1, 150).EmailAddress().WithMessage("Erro no email");
             RuleFor(pessoa => pessoa.DataNascimento).NotEmpty().Must(dtNas => ValidacaoDataNascimento(dtNas)).WithMessage("Erro na data de nascimento");
             RuleFor(pessoa => pessoa).NotEmpty().Must(pessoa => ValidacaoCpf(pessoa.Cpf)).Must(pessoa => JaExisteCpf(pessoa)).WithMessage("Erro no cpf");
         }
         
-        //verificar se já existe
         public bool JaExisteCpf(Pessoa pessoa)
         {
-            //var repositorio = Tela_Inicial_Consulta._repositorioPessoa;
+            var pessoa_bd = _pessoa.ObterPessoaPorCpf(pessoa.Cpf);
+            if (pessoa_bd.Cpf == null || pessoa_bd.Id == pessoa.Id)
+                return true;
 
-
-            return true;
+            return false;
         }
         public bool ValidacaoCpf(string cpfMascara)
         {

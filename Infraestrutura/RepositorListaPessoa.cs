@@ -42,5 +42,9 @@ namespace Infraestrutura
 
             return pessoaBuscada;
         }
+        public Pessoa ObterPessoaPorCpf(string Cpf)
+        {
+            return null;
+        }
     }
 }
