@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
-using System.Data.SqlClient;
-using Microsoft.Data.SqlClient;
-using System.Data.Common;
 using System.Configuration;
+using Microsoft.Data.SqlClient;
+using Dominio;
 
-namespace GerenciamentoClientes
+namespace Infraestrutura
 {
-    internal class RepositorioSqlPessoa : IRepositorioPessoa
+    public class RepositorioSqlPessoa : IRepositorioPessoa
     {
         private static string connectionString = ConfigurationManager.ConnectionStrings["invent018.bancoDeDadosCG.dbo"].ConnectionString;
         SqlConnection sqlConexao = new SqlConnection(connectionString);
@@ -52,8 +49,6 @@ namespace GerenciamentoClientes
             {
                 sqlConexao.Close();
             }
-
-            return listaDePessoas;
         }
 
         public void CriarPessoa(Pessoa pessoa)
@@ -162,6 +157,42 @@ namespace GerenciamentoClientes
 
             pessoa = ObterPessoaPorId(Id);
             return pessoa;
+        }
+
+        public Pessoa ObterPessoaPorCpf(string Cpf)
+        {
+            var pessoaBuscada = new Pessoa();
+            try
+            {
+                sqlConexao.Open();
+                string pesquisaSQL = "SELECT * FROM pessoa WHERE CPF=@CPF";
+                SqlCommand comando = new SqlCommand(pesquisaSQL, sqlConexao);
+                comando.CommandType = CommandType.Text;
+                comando.Parameters.AddWithValue("@CPF", Cpf);
+                SqlDataReader dataReader = comando.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    pessoaBuscada = new Pessoa()
+                    {
+                        Id = Convert.ToInt32(dataReader["Id"]),
+                        Nome = dataReader["Nome"].ToString(),
+                        Email = dataReader["Email"].ToString(),
+                        DataNascimento = Convert.ToDateTime(dataReader["DataNascimento"].ToString()),
+                        Cpf = dataReader["CPF"].ToString(),
+                    };
+                }
+                dataReader.Close();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                sqlConexao.Close();
+            }
+            return pessoaBuscada;
         }
     }
 }

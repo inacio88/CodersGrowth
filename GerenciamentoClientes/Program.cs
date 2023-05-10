@@ -1,8 +1,7 @@
-using System;
 using System.Configuration;
-using System.Linq;
+using Dominio;
 using FluentMigrator.Runner;
-using FluentMigrator.Runner.Initialization;
+using Infraestrutura;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -18,6 +17,7 @@ namespace GerenciamentoClientes
             var builder = CriaHostBuilder();
             var servicesProvider = builder.Build().Services;
             var repositorio = servicesProvider.GetService<IRepositorioPessoa>();
+            var validacao = servicesProvider.GetService<ValidacaoPessoa>();
             using (var serviceProvider = CreateServices())
             using (var scope = serviceProvider.CreateScope())
             {
@@ -25,13 +25,14 @@ namespace GerenciamentoClientes
             }
 
             ApplicationConfiguration.Initialize();
-            Application.Run(new Tela_Inicial_Consulta(repositorio));
+            Application.Run(new Tela_Inicial_Consulta(repositorio, validacao));
         }
         static IHostBuilder CriaHostBuilder()
         {
             return Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) => {
                     services.AddScoped<IRepositorioPessoa, RepositorioSqlPessoa>();
+                    services.AddScoped<ValidacaoPessoa, ValidacaoPessoa>();
                 });
         }
         private static ServiceProvider CreateServices()

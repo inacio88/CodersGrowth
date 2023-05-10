@@ -1,6 +1,6 @@
-﻿using System.Windows.Forms.VisualStyles;
+﻿using System;
 
-namespace GerenciamentoClientes
+namespace Dominio
 {
     public class Pessoa
     {
