@@ -5,20 +5,40 @@ namespace Dominio
 {
     public class ValidacaoPessoa : AbstractValidator<Pessoa>
     {
-        IRepositorioPessoa _pessoa;
+        IRepositorioPessoa _repositorioPessoa;
         public ValidacaoPessoa(IRepositorioPessoa pessoa)
         {
-            _pessoa = pessoa;
-            RuleFor(pessoa => pessoa.Nome).NotEmpty().Length(1, 50).Matches(@"^[a-zA-ZÀ-ÖØ-öø-ÿ ]+$").WithMessage("Erro no nome");
-            RuleFor(pessoa => pessoa.Email).NotEmpty().Length(1, 150).EmailAddress().WithMessage("Erro no email");
-            RuleFor(pessoa => pessoa.DataNascimento).NotEmpty().Must(dtNas => ValidacaoDataNascimento(dtNas)).WithMessage("Erro na data de nascimento");
-            RuleFor(pessoa => pessoa).NotEmpty().Must(pessoa => ValidacaoCpf(pessoa.Cpf)).Must(pessoa => JaExisteCpf(pessoa)).WithMessage("Erro no cpf");
+            _repositorioPessoa = pessoa;
+            RuleFor(pessoa => pessoa.Nome)
+                .NotEmpty()
+                .Length(1, 50)
+                .Matches(@"^[a-zA-ZÀ-ÖØ-öø-ÿ ]+$")
+                .WithMessage("O campo {PropertyName} precisa ser fornecido");
+
+            RuleFor(pessoa => pessoa.Email)
+                .NotEmpty()
+                .Length(1, 150)
+                .EmailAddress()
+                .Matches(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$")
+                .WithMessage("Erro no formato do email");
+
+            RuleFor(pessoa => pessoa.DataNascimento)
+                .NotEmpty()
+                .Must(dataNascimento => ValidacaoDataNascimento(dataNascimento))
+                .WithMessage("Erro na data de nascimento: Idade precisa ser menor que 120 anos e maior que um dia");
+     
+            RuleFor(pessoa => pessoa)
+                .NotEmpty()
+                .Must(pessoa => ValidacaoCpf(pessoa.Cpf))
+                .WithMessage("Erro no cpf: - Cpf inválido")
+                .Must(pessoa => JaExisteCpf(pessoa))
+                .WithMessage("Erro no cpf: - Cpf já existente");
         }
         
         public bool JaExisteCpf(Pessoa pessoa)
         {
-            var pessoa_bd = _pessoa.ObterPessoaPorCpf(pessoa.Cpf);
-            if (pessoa_bd.Cpf == null || pessoa_bd.Id == pessoa.Id)
+            var pessoaBancoDeDados = _repositorioPessoa.ObterPessoaPorCpf(pessoa.Cpf);
+            if (pessoaBancoDeDados.Cpf == null || pessoaBancoDeDados.Id == pessoa.Id)
                 return true;
 
             return false;
