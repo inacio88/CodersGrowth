@@ -20,7 +20,7 @@ namespace Infraestrutura
             return conexao;
         }
 
-        public Pessoa AtualizarPessoa(Pessoa pessoa)
+        public void AtualizarPessoa(Pessoa pessoa)
         {
             using var bancoDados = Conectar();
 
@@ -33,7 +33,6 @@ namespace Infraestrutura
                 throw new Exception("Erro ao atualizar pessoa", ex);
             }
 
-            return pessoa;
         }
 
         public void CriarPessoa(Pessoa pessoa)
@@ -52,40 +51,39 @@ namespace Infraestrutura
         public Pessoa ObterPessoaPorCpf(string Cpf)
         {
             using var bancoDados = Conectar();
-            Pessoa pessoa;
-
+            
             try
             {
-                pessoa = bancoDados.GetTable<Pessoa>()
-                .FirstOrDefault(p => p.Cpf == Cpf);    
+                var pessoa = bancoDados.GetTable<Pessoa>()
+                .FirstOrDefault(p => p.Cpf == Cpf) ?? throw new Exception("Obejto pesso nulo");
+                
+                if (pessoa == null)
+                    return new Pessoa();
+
+                return pessoa;
             }
             catch (Exception ex)
             {
                 throw new Exception("Erro ao obter por cpf", ex);
             }
 
-            if (pessoa == null)
-                return new Pessoa();
-
-            return pessoa;
         }
 
         public Pessoa ObterPessoaPorId(int Id)
         {
             using var bancoDados = Conectar();
-            var pessoa = new Pessoa();
 
             try
             {
-                pessoa = bancoDados.GetTable<Pessoa>()
+                var pessoa = bancoDados.GetTable<Pessoa>()
                 .FirstOrDefault(p => p.Id == Id);
+                return pessoa ?? throw new Exception("Obejto pesso nulo");
             }
             catch (Exception ex)
             {
                 throw new Exception("Erro ao obter por ID", ex);
             }
 
-            return pessoa;
         }
 
         public List<Pessoa> ObterTodasPessoas()

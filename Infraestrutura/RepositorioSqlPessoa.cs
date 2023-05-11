@@ -128,7 +128,7 @@ namespace Infraestrutura
             return pessoaBuscada;
         }
 
-        public Pessoa AtualizarPessoa(Pessoa pessoa)
+        public void AtualizarPessoa(Pessoa pessoa)
         {
             var Id = pessoa.Id;
             
@@ -155,8 +155,6 @@ namespace Infraestrutura
                 sqlConexao.Close();
             }
 
-            pessoa = ObterPessoaPorId(Id);
-            return pessoa;
         }
 
         public Pessoa ObterPessoaPorCpf(string Cpf)
