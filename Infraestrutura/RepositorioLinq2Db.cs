@@ -9,7 +9,8 @@ using System.Configuration;
 
 namespace Infraestrutura
 {
-    public class Conexao
+ 
+    public class RepositorioLinq2Db : IRepositorioPessoa
     {
         private static string connectionString = ConfigurationManager.ConnectionStrings["invent018.bancoDeDadosCG.dbo"].ConnectionString;
 
@@ -18,35 +19,50 @@ namespace Infraestrutura
             DataConnection conexao = SqlServerTools.CreateDataConnection(connectionString);
             return conexao;
         }
-    }
 
-    public class RepositorioLinq2Db : IRepositorioPessoa
-    {
         public Pessoa AtualizarPessoa(Pessoa pessoa)
         {
-            var conexao = new Conexao();
-            var bancoDados = conexao.Conectar();
+            using var bancoDados = Conectar();
 
-            bancoDados.Update(pessoa);
+            try
+            {
+                bancoDados.Update(pessoa);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao atualizar pessoa", ex);
+            }
 
             return pessoa;
         }
 
         public void CriarPessoa(Pessoa pessoa)
         {
-            var conexao = new Conexao();
-            var bancoDados = conexao.Conectar();
-
-            bancoDados.Insert(pessoa);
+            using var bancoDados = Conectar();
+            try
+            {
+                bancoDados.Insert(pessoa);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao criar pessoa", ex);
+            }
         }
 
         public Pessoa ObterPessoaPorCpf(string Cpf)
         {
-            var conexao = new Conexao();
-            var bancoDados = conexao.Conectar();
+            using var bancoDados = Conectar();
+            Pessoa pessoa;
 
-            var pessoa = bancoDados.GetTable<Pessoa>()
-            .FirstOrDefault(p => p.Cpf == Cpf);
+            try
+            {
+                pessoa = bancoDados.GetTable<Pessoa>()
+                .FirstOrDefault(p => p.Cpf == Cpf);    
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao obter por cpf", ex);
+            }
 
             if (pessoa == null)
                 return new Pessoa();
@@ -56,32 +72,52 @@ namespace Infraestrutura
 
         public Pessoa ObterPessoaPorId(int Id)
         {
-            var conexao = new Conexao();
-            var bancoDados = conexao.Conectar();
+            using var bancoDados = Conectar();
+            var pessoa = new Pessoa();
 
-            var pessoa = bancoDados.GetTable<Pessoa>()
-            .FirstOrDefault(p => p.Id == Id);
+            try
+            {
+                pessoa = bancoDados.GetTable<Pessoa>()
+                .FirstOrDefault(p => p.Id == Id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao obter por ID", ex);
+            }
 
             return pessoa;
         }
 
         public List<Pessoa> ObterTodasPessoas()
         {
-            var conexao = new Conexao();
-            var bancoDados = conexao.Conectar();
+            using var bancoDados = Conectar();
+            try
+            {
+                var query = from p in bancoDados.GetTable<Pessoa>()
+                                orderby p.Nome ascending
+                                select p;
+                
+                return query.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao obter todas as pessoas", ex);
+            }
 
-            var query = from p in bancoDados.GetTable<Pessoa>()
-                        orderby p.Nome ascending
-                        select p;
-
-            return query.ToList();
         }
 
         public void RemoverPessoa(int Id)
         {
-            var conexao = new Conexao();
-            var bancoDados = conexao.Conectar();
-            bancoDados.GetTable<Pessoa>().Delete(p => p.Id == Id);
+            using var bancoDados = Conectar();
+            
+            try
+            {
+                bancoDados.GetTable<Pessoa>().Delete(p => p.Id == Id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao remover pessoa", ex);
+            }
         }
     }
 }
