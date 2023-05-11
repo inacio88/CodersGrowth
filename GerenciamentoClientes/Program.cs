@@ -31,7 +31,7 @@ namespace GerenciamentoClientes
         {
             return Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) => {
-                    services.AddScoped<IRepositorioPessoa, RepositorioSqlPessoa>();
+                    services.AddScoped<IRepositorioPessoa, RepositorioLinq2Db>();
                     services.AddScoped<ValidacaoPessoa, ValidacaoPessoa>();
                 });
         }
