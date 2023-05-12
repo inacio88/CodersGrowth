@@ -41,9 +41,9 @@ namespace Infraestrutura
             pessoaBuscada = pessoa;
 
         }
-        public Pessoa ObterPessoaPorCpf(string Cpf)
+        public bool ObterPessoaPorCpf(string Cpf, int Id)
         {
-            return null;
+            return false;
         }
     }
 }

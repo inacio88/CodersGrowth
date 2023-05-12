@@ -9,7 +9,7 @@ namespace Dominio
         public void RemoverPessoa(int Id);
         public Pessoa ObterPessoaPorId(int Id);
         public void AtualizarPessoa(Pessoa pessoa);
-        public Pessoa ObterPessoaPorCpf(string Cpf);
+        public bool ObterPessoaPorCpf(string Cpf, int Id);
 
     }
 }

@@ -48,19 +48,19 @@ namespace Infraestrutura
             }
         }
 
-        public Pessoa ObterPessoaPorCpf(string Cpf)
+        public bool ObterPessoaPorCpf(string Cpf, int Id)
         {
             using var bancoDados = Conectar();
             
             try
             {
-                var pessoa = bancoDados.GetTable<Pessoa>()
-                .FirstOrDefault(p => p.Cpf == Cpf) ?? throw new Exception("Obejto pesso nulo");
-                
-                if (pessoa == null)
-                    return new Pessoa();
+                var pessoaBancoDados = bancoDados.GetTable<Pessoa>()
+                .FirstOrDefault(p => p.Cpf == Cpf);
 
-                return pessoa;
+                if (pessoaBancoDados == null || pessoaBancoDados.Id == Id)
+                    return true;
+
+                return false;
             }
             catch (Exception ex)
             {

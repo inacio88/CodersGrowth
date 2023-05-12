@@ -157,7 +157,7 @@ namespace Infraestrutura
 
         }
 
-        public Pessoa ObterPessoaPorCpf(string Cpf)
+        public bool ObterPessoaPorCpf(string Cpf, int Id)
         {
             var pessoaBuscada = new Pessoa();
             try
@@ -190,7 +190,10 @@ namespace Infraestrutura
             {
                 sqlConexao.Close();
             }
-            return pessoaBuscada;
+            if (pessoaBuscada.Id == Id || pessoaBuscada.Cpf == null)
+                return true;
+
+            return false;
         }
     }
 }
