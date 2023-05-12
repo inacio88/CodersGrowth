@@ -10,11 +10,16 @@ namespace GerenciamentoClientes
         private readonly ValidacaoPessoa _validacao;
         public Tela_Inicial_Consulta(IRepositorioPessoa repositorioPessoa, ValidacaoPessoa validacao)
         {
-            InitializeComponent();
             _repositorioPessoa = repositorioPessoa;
-            dataGridViewListaPessoa.DataSource = null;
-            dataGridViewListaPessoa.DataSource = repositorioPessoa.ObterTodasPessoas();
             _validacao = validacao;
+            InitializeComponent();
+            AtualizaLista();
+        }
+
+        public void AtualizaLista()
+        {
+            dataGridViewListaPessoa.DataSource = null;
+            dataGridViewListaPessoa.DataSource = _repositorioPessoa.ObterTodasPessoas();
         }
 
         private void AoClicarEmNovo(object sender, EventArgs e)
@@ -33,9 +38,7 @@ namespace GerenciamentoClientes
                 {
                     MessageBox.Show(resultadoValidacao.ToString(), "Erro", MessageBoxButtons.OK);
                 }
-                dataGridViewListaPessoa.DataSource = null;
-                dataGridViewListaPessoa.DataSource = _repositorioPessoa.ObterTodasPessoas();
-
+                AtualizaLista();
             }
             catch
             {
@@ -70,10 +73,7 @@ namespace GerenciamentoClientes
                     {
                         MessageBox.Show(resultadoValidacao.ToString(), "Erro", MessageBoxButtons.OK);
                     }
-
-
-                    dataGridViewListaPessoa.DataSource = null;
-                    dataGridViewListaPessoa.DataSource = _repositorioPessoa.ObterTodasPessoas();
+                    AtualizaLista();
                 }
             }
             catch
@@ -101,8 +101,7 @@ namespace GerenciamentoClientes
                     if (result == DialogResult.Yes)
                     {
                         _repositorioPessoa.RemoverPessoa(clienteSelecionado.Id);
-                        dataGridViewListaPessoa.DataSource = null;
-                        dataGridViewListaPessoa.DataSource = _repositorioPessoa.ObterTodasPessoas();
+                        AtualizaLista();
                     }
                 }
             }

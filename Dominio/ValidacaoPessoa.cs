@@ -37,8 +37,8 @@ namespace Dominio
         
         public bool JaExisteCpf(Pessoa pessoa)
         {
-            var pessoaBancoDeDados = _repositorioPessoa.ObterPessoaPorCpf(pessoa.Cpf);
-            if (pessoaBancoDeDados.Cpf == null || pessoaBancoDeDados.Id == pessoa.Id)
+            
+            if (_repositorioPessoa.ObterPessoaPorCpf(pessoa.Cpf, pessoa.Id))
                 return true;
 
             return false;

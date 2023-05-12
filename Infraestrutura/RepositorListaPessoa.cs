@@ -34,17 +34,16 @@ namespace Infraestrutura
             return pessoaBuscada;
         }
 
-        public Pessoa AtualizarPessoa(Pessoa pessoa)
+        public void AtualizarPessoa(Pessoa pessoa)
         {
             var pessoaBuscada = ObterPessoaPorId(pessoa.Id);
 
             pessoaBuscada = pessoa;
 
-            return pessoaBuscada;
         }
-        public Pessoa ObterPessoaPorCpf(string Cpf)
+        public bool ObterPessoaPorCpf(string Cpf, int Id)
         {
-            return null;
+            return false;
         }
     }
 }
