@@ -1,0 +1,6 @@
+<mvc:View
+	controllerName="sap.ui.gerenciamento.cliente.controller.App"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+	
+</mvc:View>
