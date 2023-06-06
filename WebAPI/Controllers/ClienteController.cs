@@ -93,7 +93,7 @@ namespace WebAPI.Controllers
                 {
                     return BadRequest(pessoaValida.ToString());
                 }
-
+                
                 _repositorioPessoa.AtualizarPessoa(pessoaAtualizada);
 
                 return Ok();
