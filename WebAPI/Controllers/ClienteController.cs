@@ -22,7 +22,7 @@ namespace WebAPI.Controllers
         {
             try
             {
-                List<Pessoa> pessoas = _repositorioPessoa.ObterTodasPessoas();
+                var pessoas = _repositorioPessoa.ObterTodasPessoas();
 
                 return Ok(pessoas);
             }
@@ -60,7 +60,10 @@ namespace WebAPI.Controllers
         {
             try 
             {
-                _repositorioPessoa.RemoverPessoa(Id);
+                if (_repositorioPessoa.ObterPessoaPorId(Id) != null)
+                {
+                    _repositorioPessoa.RemoverPessoa(Id);
+                }
             }
             catch (Exception ex)
             {
@@ -82,18 +85,18 @@ namespace WebAPI.Controllers
             }
         }
 
-        [HttpPost("{Id}")]
-        public IActionResult AtualizarPessoa([FromRoute] int Id, [FromBody] Pessoa pessoaAtualizada)
+        [HttpPut("{Id}")]
+        public IActionResult AtualizarPessoa([FromRoute] int id, [FromBody] Pessoa pessoaAtualizada)
         {
             try
             {
                 var pessoaValida = _validacao.Validate(pessoaAtualizada);
 
-                if (pessoaAtualizada == null || !pessoaValida.IsValid)
+                if (pessoaAtualizada == null || !pessoaValida.IsValid || _repositorioPessoa.ObterPessoaPorId(id) == null)
                 {
                     return BadRequest(pessoaValida.ToString());
                 }
-                
+                pessoaAtualizada.Id = id;
                 _repositorioPessoa.AtualizarPessoa(pessoaAtualizada);
 
                 return Ok();
