@@ -48,6 +48,31 @@
 					"fallbackLocale": ""
 				}
 			}
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"type": "View",
+				"viewType": "XML",
+				"path": "sap.ui.gerenciamento.cliente.view",
+				"controlId": "app",
+				"controlAggregation": "pages"
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "overview",
+					"target": "overview"
+				}
+				
+			],
+			"targets": {
+				"overview": {
+					"id": "overview",
+					"name": "Overview"
+				}
+				
+			}
 		}
 	}
 }

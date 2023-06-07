@@ -1,0 +1,11 @@
+<mvc:View
+	controllerName="sap.ui.gerenciamento.cliente.controller.TabelaClientes"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+
+	<Button
+		text="{i18n>showHelloButtonText}"
+		/>
+
+
+</mvc:View>
