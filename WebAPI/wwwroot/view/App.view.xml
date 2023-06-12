@@ -2,5 +2,9 @@
 	controllerName="sap.ui.gerenciamento.cliente.controller.App"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc">
+
+	<Shell>
+		<App id="app"/>
+	</Shell>
 	
 </mvc:View>
