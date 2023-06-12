@@ -18,21 +18,18 @@ sap.ui.define([
             fetch('/api/Cliente').then((response) => {
                 return response.json();
             }).then((data) =>{
-                console.log(data);
                 var oModel = new JSONModel(data);
                 this.getView().setModel(oModel, "clientes");
                 MessageToast.show("Dados carregados com sucesso!");
 
             }).catch(() =>{
                 MessageToast.show("Falha ao obter os dados.");
-                console.log('resolved', err);
             });
 
         },
 
 		onFiltrarClientes : function (oEvent) {
 
-			// build filter array
 			var aFilterNome = [];
             var aFilterEmail = [];
 			var sQuery = oEvent.getParameter("query");
@@ -41,8 +38,6 @@ sap.ui.define([
 				aFilterEmail.push(new Filter("email", FilterOperator.Contains, sQuery));
 			}
             
-
-			// filter binding
 			var oList = this.byId("table");
 			var oBinding = oList.getBinding("items");
 			oBinding.filter(aFilterNome);
