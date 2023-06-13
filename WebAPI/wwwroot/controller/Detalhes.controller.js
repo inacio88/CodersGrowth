@@ -5,14 +5,16 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 
 
-], function (Controller, JSONModel,MessageToast, History) {
+], function (Controller, JSONModel, MessageToast, History) {
 	"use strict";
 	return Controller.extend("sap.ui.gerenciamento.cliente.controller.Detalhes", {
+
 		onInit: function () {
 			var oRouter = this.getOwnerComponent().getRouter();
 			oRouter.getRoute("detalhes").attachPatternMatched(this._onObjectMatched, this);
             
 		},
+		
 		obterPorId: function (id) {
             fetch(`/api/Cliente/${id}`).then((response) => {
                 return response.json();
@@ -26,6 +28,7 @@ sap.ui.define([
             });
 
         },
+
 		_onObjectMatched: function (oEvent) {
 			var id = oEvent.getParameter("arguments").clienteCaminho;
 			this.getView().bindElement({
@@ -35,7 +38,7 @@ sap.ui.define([
 			this.obterPorId(id);
 		},
 
-		onclicarEmVoltar: function () {
+		aoclicarEmVoltar: function () {
 			var oHistory = History.getInstance();
 			var sPreviousHash = oHistory.getPreviousHash();
 

@@ -28,7 +28,7 @@ sap.ui.define([
 
         },
 
-		onFiltrarClientes : function (oEvent) {
+		aoFiltrarClientes : function (oEvent) {
 
 			var aFilterNome = [];
             var aFilterEmail = [];
@@ -43,8 +43,9 @@ sap.ui.define([
 			oBinding.filter(aFilterNome);
 			oBinding.filter(aFilterEmail);
 		},
-		onClicar: function (oEvent) {
-	
+
+		aoClicar: function (oEvent) {
+
 			var oItem = oEvent.getSource();
 			var lista = oItem.getBindingContext("clientes");
 			var oRouter = this.getOwnerComponent().getRouter();

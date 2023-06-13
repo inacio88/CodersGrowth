@@ -11,7 +11,7 @@
                     <m:content>
                         <m:Bar>
                             <m:contentRight>
-                                <m:Button icon="sap-icon://nav-back" press="onclicarEmVoltar" />
+                                <m:Button icon="sap-icon://nav-back" press="aoclicarEmVoltar" />
                                 <m:ToolbarSpacer/> 
                                 <m:Button icon="sap-icon://request" text="{i18n>detalhesBtnEditar}" press="" />                                                                
                                <m:Button icon="sap-icon://delete" text="{i18n>detalhesBtnExcluir}" press="" />

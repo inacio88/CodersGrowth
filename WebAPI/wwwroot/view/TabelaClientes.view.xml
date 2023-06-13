@@ -16,7 +16,7 @@
 						
 						<ToolbarSpacer/>
 
-						<SearchField width="40%" class="sapUiSmallMargin" placeholder="Buscar" search=".onFiltrarClientes"/>
+						<SearchField width="40%" class="sapUiSmallMargin" placeholder="Buscar" search=".aoFiltrarClientes"/>
 
 						<ToolbarSpacer/>
 
@@ -43,7 +43,7 @@
 
 				</columns>
 				<items>
-					<ColumnListItem vAlign="Middle" type="Navigation" press="onClicar">
+					<ColumnListItem vAlign="Middle" type="Navigation" press="aoClicar">
 						<cells>
 							<ObjectIdentifier
 									title="{clientes>nome}"/>
