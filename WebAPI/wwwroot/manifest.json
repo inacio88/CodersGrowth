@@ -63,6 +63,11 @@
 					"pattern": "",
 					"name": "overview",
 					"target": "overview"
+				},
+				{
+				  "pattern": "detalhes/{clienteCaminho}",
+				  "name": "detalhes",
+				  "target": "detalhes"
 				}
 				
 			],
@@ -70,6 +75,11 @@
 				"overview": {
 					"id": "overview",
 					"name": "Overview"
+				},
+
+				"detalhes": {
+				  "id": "detalhes",
+				  "name": "Detalhes"
 				}
 				
 			}

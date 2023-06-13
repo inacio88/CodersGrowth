@@ -1,0 +1,32 @@
+<mvc:View
+	controllerName="sap.ui.gerenciamento.cliente.controller.Detalhes"
+
+	xmlns:m="sap.m"
+
+	xmlns:mvc="sap.ui.core.mvc">
+	<m:Page
+		title="{i18n>detalhesPaginaTitulo}">
+			<m:headerContent>                   
+                    </m:headerContent>
+                    <m:content>
+                        <m:Bar>
+                            <m:contentRight>
+                                <m:Button icon="sap-icon://nav-back" press="aoclicarEmVoltar" />
+                                <m:ToolbarSpacer/> 
+                                <m:Button icon="sap-icon://request" text="{i18n>detalhesBtnEditar}" press="" />                                                                
+                               <m:Button icon="sap-icon://delete" text="{i18n>detalhesBtnExcluir}" press="" />
+                            </m:contentRight>
+                        </m:Bar>
+                         <m:Panel class="sapUiResponsiveMargin" width="auto">
+                            <m:content>
+                               <m:ObjectHeader 
+                                    title="{clienteSelecionado>/nome}">
+                                    <m:ObjectAttribute text="CPF :  {clienteSelecionado>/cpf}"/>
+                                    <m:ObjectAttribute text="E-mail :  {clienteSelecionado>/email}"/>
+                                    <m:ObjectAttribute text="Data de Nascimento :  {path : 'clienteSelecionado>/dataNascimento', type : 'sap.ui.model.type.Date', formatOptions: {style : 'medium', source: {pattern: 'yyyy-MM-ddTHH:mm:ss.mmm'}}}"/>
+                                </m:ObjectHeader>
+                            </m:content>
+                        </m:Panel>
+                </m:content>
+	</m:Page>
+</mvc:View>
