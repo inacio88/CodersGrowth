@@ -1,0 +1,70 @@
+<mvc:View
+	controllerName="sap.ui.gerenciamento.cliente.controller.FormCriar"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="FormularioCliente"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			labelSpanXL="4"
+			labelSpanL="3"
+			labelSpanM="4"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="0"
+			emptySpanL="4"
+			emptySpanM="0"
+			emptySpanS="0"
+			columnsXL="2"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false"
+			ariaLabelledBy="TituloFormulario" >
+			<f:toolbar>
+				<Toolbar id="TB1">
+					<Button icon="sap-icon://nav-back" press="aoclicarEmVoltar" />
+                    <ToolbarSpacer/>
+					<Title id="TituloFormulario" text="{i18n>TituloFormulario}"/>
+					<ToolbarSpacer />
+					<Button icon="sap-icon://save"/>
+					<Button icon="sap-icon://cancel" press="aoclicarEmVoltar" />
+				</Toolbar>
+			</f:toolbar>
+			<f:content>
+				<Label text="{i18n>CampoNome}" />
+				<Input value="{dadosFormularioCriar>/nome}"
+		            valueLiveUpdate="true" />
+				
+                <Label text="{i18n>CampoEmail}" />
+				<Input value="{dadosFormularioCriar>/email}"
+		            valueLiveUpdate="true"/>
+				
+
+                <Label text="{i18n>CampoDataNascimento}" labelFor="DP2"/>
+				<DatePicker
+					id="DP2"
+					value="{
+						'path':'dadosFormularioCriar>/dataNascimento',
+						'type':'sap.ui.model.type.Date',
+						'formatOptions': {
+							'pattern': 'dd-MM-yyyy'
+						}
+					}"
+					change="handleChange"
+					class="sapUiSmallMarginBottom"
+		            
+                    />
+			    
+                <MaskInput value="{dadosFormularioCriar>/cpf}"
+                mask="999.999.999-99" placeholder="{i18n>CampoCpf}" showClearIcon="{/showClearIcon}">
+				</MaskInput>
+
+	
+				
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+</mvc:View>
