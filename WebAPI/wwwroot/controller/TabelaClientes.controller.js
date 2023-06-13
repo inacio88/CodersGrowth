@@ -42,6 +42,17 @@ sap.ui.define([
 			var oBinding = oList.getBinding("items");
 			oBinding.filter(aFilterNome);
 			oBinding.filter(aFilterEmail);
+		},
+		onClicar: function (oEvent) {
+	
+			var oItem = oEvent.getSource();
+			var lista = oItem.getBindingContext("clientes");
+			var oRouter = this.getOwnerComponent().getRouter();
+			let idObjetoSelecionado = lista.getProperty("id");
+			
+			oRouter.navTo("detalhes", {
+				clienteCaminho: window.encodeURIComponent(idObjetoSelecionado)
+			});
 		}
 	});
 

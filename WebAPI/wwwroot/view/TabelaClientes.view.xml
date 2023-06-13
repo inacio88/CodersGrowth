@@ -43,7 +43,7 @@
 
 				</columns>
 				<items>
-					<ColumnListItem vAlign="Middle">
+					<ColumnListItem vAlign="Middle" type="Navigation" press="onClicar">
 						<cells>
 							<ObjectIdentifier
 									title="{clientes>nome}"/>
