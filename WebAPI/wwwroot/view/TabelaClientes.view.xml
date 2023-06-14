@@ -20,7 +20,7 @@
 
 						<ToolbarSpacer/>
 
-                        <Button text="{i18n>BtnCadastroNovo}" icon="sap-icon://add-employee"  class="sapUiSmallMarginEnd" type="Emphasized"/>
+                        <Button text="{i18n>BtnCadastroNovo}" icon="sap-icon://add-employee" press="aoClicarEmNovo" class="sapUiSmallMarginEnd" type="Emphasized"/>
 					</Toolbar>
 				</headerToolbar>
 

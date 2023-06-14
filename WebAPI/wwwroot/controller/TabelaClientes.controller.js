@@ -54,6 +54,11 @@ sap.ui.define([
 			oRouter.navTo("detalhes", {
 				clienteCaminho: window.encodeURIComponent(idObjetoSelecionado)
 			});
+		},
+
+		aoClicarEmNovo: function (oEvent) {
+			var oRouter = this.getOwnerComponent().getRouter();
+			oRouter.navTo("formCriar");
 		}
 	});
 

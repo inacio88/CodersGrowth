@@ -1,6 +1,5 @@
 using Dominio;
 using FluentValidation;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -37,16 +36,11 @@ namespace WebAPI.Controllers
         {
             try 
             {
-                var pessoaValida = _validacao.Validate(pessoa);
-               
-                if (pessoa == null || !pessoaValida.IsValid) 
-                {
-                    return BadRequest(pessoaValida.ToString()); 
-                }
+                _validacao.ValidateAndThrow(pessoa);
                
                 _repositorioPessoa.CriarPessoa(pessoa);
                 
-                return Created($"{pessoa.Id}", pessoa);
+                return Ok(pessoa.Id);
             }
             catch (Exception ex)
             {
@@ -61,9 +55,7 @@ namespace WebAPI.Controllers
             try 
             {
                 if (_repositorioPessoa.ObterPessoaPorId(Id) != null)
-                {
                     _repositorioPessoa.RemoverPessoa(Id);
-                }
             }
             catch (Exception ex)
             {
@@ -77,7 +69,8 @@ namespace WebAPI.Controllers
         {
             try
             {
-                return Ok(_repositorioPessoa.ObterPessoaPorId(Id));
+                var pessoa = _repositorioPessoa.ObterPessoaPorId(Id);
+                return Ok(pessoa);
             }
             catch (Exception ex)
             {
@@ -106,7 +99,5 @@ namespace WebAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-
     }
 }

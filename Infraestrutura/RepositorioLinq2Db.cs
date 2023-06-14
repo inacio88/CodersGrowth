@@ -35,12 +35,12 @@ namespace Infraestrutura
 
         }
 
-        public void CriarPessoa(Pessoa pessoa)
+        public int CriarPessoa(Pessoa pessoa)
         {
             using var bancoDados = Conectar();
             try
             {
-                bancoDados.Insert(pessoa);
+                return pessoa.Id = bancoDados.InsertWithInt32Identity(pessoa);
             }
             catch (Exception ex)
             {
