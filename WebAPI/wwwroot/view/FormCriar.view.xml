@@ -29,7 +29,7 @@
                     <ToolbarSpacer/>
 					<Title id="TituloFormulario" text="{i18n>TituloFormulario}"/>
 					<ToolbarSpacer />
-					<Button icon="sap-icon://save"/>
+					<Button icon="sap-icon://save" press="aoClicarEmSalvar" />
 					<Button icon="sap-icon://cancel" press="aoclicarEmVoltar" />
 				</Toolbar>
 			</f:toolbar>
@@ -46,16 +46,7 @@
                 <Label text="{i18n>CampoDataNascimento}" labelFor="DP2"/>
 				<DatePicker
 					id="DP2"
-					value="{
-						'path':'dadosFormularioCriar>/dataNascimento',
-						'type':'sap.ui.model.type.Date',
-						'formatOptions': {
-							'pattern': 'dd-MM-yyyy'
-						}
-					}"
-					change="handleChange"
-					class="sapUiSmallMarginBottom"
-		            
+					value="{path: 'dadosFormularioCriar>/dataNascimento', type: 'sap.ui.model.type.Date', formatOptions: {source: {pattern: 'yyyy-MM-ddTHH:mm:ss.mmm'}}}"
                     />
 			    
                 <MaskInput value="{dadosFormularioCriar>/cpf}"
