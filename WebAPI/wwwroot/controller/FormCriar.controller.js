@@ -12,21 +12,21 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
 
     onInit: function (oEvent) {
         
-        var oData = {
+        let oData = {
             "nome": "",
             "email": "",
             "cpf": "",
             "dataNascimento": "",
         };
 
-        var oModel = new JSONModel(oData);
+        let oModel = new JSONModel(oData);
         this.getView().setModel(oModel, "dadosFormularioCriar");
 
     },
 
     _enviarRequisicaoCriar: async function () {
-        var dadosFormularioCriar = this.getView().getModel("dadosFormularioCriar");
-        var data = dadosFormularioCriar.oData;
+        let dadosFormularioCriar = this.getView().getModel("dadosFormularioCriar");
+        let data = dadosFormularioCriar.oData;
 
         return fetch('/api/Cliente', {
                 method: "POST",
@@ -52,19 +52,19 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
     
     _navegarParaDetalhes: function(id){
         const rotaDetalhes = "detalhes";
-        var oRouter = this.getOwnerComponent().getRouter();
+        let oRouter = this.getOwnerComponent().getRouter();
         oRouter.navTo(rotaDetalhes, {clienteCaminho: window.encodeURIComponent(id)});
         
     },
 
     aoclicarEmVoltar: function () {
-        var oHistory = History.getInstance();
-        var sPreviousHash = oHistory.getPreviousHash();
+        let oHistory = History.getInstance();
+        let sPreviousHash = oHistory.getPreviousHash();
 
         if (sPreviousHash !== undefined) {
             window.history.go(-1);
         } else {
-            var oRouter = this.getOwnerComponent().getRouter();
+            let oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo("overview", {}, true);
         }
     }
