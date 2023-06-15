@@ -35,11 +35,16 @@
 			</f:toolbar>
 			<f:content>
 				<Label text="{i18n>CampoNome}" />
-				<Input value="{dadosFormularioCriar>/nome}"
-		            valueLiveUpdate="true" />
+				<Input value="{dadosFormularioCriar>/nome}" 
+					id="inputNome" 
+					name="inputNome"
+					valueState="None"
+		            valueLiveUpdate="true"
+					liveChange="aoMudarCampo" />
 				
                 <Label text="{i18n>CampoEmail}" />
-				<Input value="{dadosFormularioCriar>/email}"
+				<Input value="{dadosFormularioCriar>/email}" id="inputEmail"
+					liveChange="aoMudarCampo"
 		            valueLiveUpdate="true"/>
 				
 
