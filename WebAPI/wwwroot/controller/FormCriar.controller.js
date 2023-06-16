@@ -3,9 +3,11 @@ sap.ui.define([
     'sap/ui/model/json/JSONModel',
 	"sap/ui/core/routing/History",
     "sap/m/MessageToast",
+    "sap/m/MessageBox",
 
 
-], function(Controller, JSONModel, History, MessageToast) {
+
+], function(Controller, JSONModel, History, MessageToast, MessageBox) {
 "use strict";
 
 var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
@@ -24,6 +26,7 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
         let oModel = new JSONModel(oData);
         this.getView().setModel(oModel, "dadosFormularioCriar");
 
+
     },
 
     _enviarRequisicaoCriar: async function () {
@@ -39,8 +42,8 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
     },
     
     aoClicarEmSalvar: async function () {
-        
-        if (1 === 3) {
+                
+        if (this._checarCamposValidados()) {
             let resposta = this._enviarRequisicaoCriar()
                 .then(resp => resp.json())
                 .then(id => {
@@ -52,6 +55,9 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
                     MessageToast.show("Cadastro realizado com sucesso!");
                     this._navegarParaDetalhes(id);
             });
+        }
+        else{
+            MessageBox.error("Verifique novamente se todos os campos estão corretos!")
         }
     },
     
@@ -82,6 +88,18 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
 
 
     },
+    _checarCamposValidados: function () {
+        let elementosComErro = document.getElementsByClassName("sapMInputBaseContentWrapperError");
+        let elementosComSucesso = document.getElementsByClassName("sapMInputBaseContentWrapperSuccess");
+
+        if (elementosComErro.length === 0 && elementosComSucesso.length == 4) {
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    },
 
     _validarNome: function (nome) {
         let erros = [];
@@ -91,7 +109,6 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
             erros.push("Nome deve ter no mínimo 1 caractere");
         }
 
-        console.log(nome.match(formatoNome));
         if (!nome.match(formatoNome)){
             erros.push("Não pode ter caracteres especiais ou números");
         }
@@ -105,7 +122,7 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
         string_para_validar = string_para_validar.trim();
         
 
-        console.log(string_para_validar.match(formato));
+       
         if (!string_para_validar.match(formato)){
             erros.push("Esse formato de email não é válido!");
         }
@@ -116,9 +133,9 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
     _validarCpf: function (string_para_validar) {
         let strCPF = string_para_validar.replaceAll(".", "").replace("-", "").replace(" ", "");
         let erros = [];
-        console.log(strCPF, strCPF.length);
-        var Soma;
-        var Resto;
+       
+        let Soma;
+        let Resto;
         Soma = 0;
         
         for (let i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);

@@ -40,7 +40,8 @@
 					name="inputNome"
 					valueState="None"
 		            valueLiveUpdate="true"
-					liveChange="aoMudarCampo" />
+					liveChange="aoMudarCampo"
+					fieldGroupIds="camposFormularios" />
 				
                 <Label text="{i18n>CampoEmail}" />
 				<Input value="{dadosFormularioCriar>/email}" 
@@ -48,7 +49,8 @@
 					name="inputEmail"
 					valueState="None"
 					liveChange="aoMudarCampo"
-		            valueLiveUpdate="true"/>
+		            valueLiveUpdate="true"
+					fieldGroupIds="camposFormularios"/>
 				
 
                 <Label text="{i18n>CampoDataNascimento}" labelFor="inputDataNascimento"/>
@@ -58,6 +60,7 @@
 					valueState="None"
 					change="aoMudarCampo"
 					class="sapUiSmallMarginBottom"
+					fieldGroupIds="camposFormularios"
 					value="{
 						'path': 'dadosFormularioCriar>/dataNascimento',
 						'type': 'sap.ui.model.type.Date',
@@ -72,7 +75,8 @@
 				id="inputCpf"
 				name="inputCpf"
 				valueState="None"
-				change="aoMudarCampo">
+				change="aoMudarCampo"
+				fieldGroupIds="camposFormularios">
 				</MaskInput>
 
 	
