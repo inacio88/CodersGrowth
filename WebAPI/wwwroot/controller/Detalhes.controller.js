@@ -10,7 +10,7 @@ sap.ui.define([
 	return Controller.extend("sap.ui.gerenciamento.cliente.controller.Detalhes", {
 
 		onInit: function () {
-			var oRouter = this.getOwnerComponent().getRouter();
+			let oRouter = this.getOwnerComponent().getRouter();
 			oRouter.getRoute("detalhes").attachPatternMatched(this._onObjectMatched, this);
             
 		},
@@ -19,7 +19,7 @@ sap.ui.define([
             fetch(`/api/Cliente/${id}`).then((response) => {
                 return response.json();
             }).then((data) =>{
-                var oModel = new JSONModel(data);
+                let oModel = new JSONModel(data);
                 this.getView().setModel(oModel, "clienteSelecionado");
                 MessageToast.show("Dados carregados com sucesso!");
 
@@ -30,7 +30,7 @@ sap.ui.define([
         },
 
 		_onObjectMatched: function (oEvent) {
-			var id = oEvent.getParameter("arguments").clienteCaminho;
+			let id = oEvent.getParameter("arguments").clienteCaminho;
 			this.getView().bindElement({
 				path: "/" + window.decodeURIComponent(oEvent.getParameter("arguments").clienteCaminho),
 				model: "clientes"
@@ -39,13 +39,13 @@ sap.ui.define([
 		},
 
 		aoclicarEmVoltar: function () {
-			var oHistory = History.getInstance();
-			var sPreviousHash = oHistory.getPreviousHash();
+			let oHistory = History.getInstance();
+			let sPreviousHash = oHistory.getPreviousHash();
 
 			if (sPreviousHash !== undefined) {
 				window.history.go(-1);
 			} else {
-				var oRouter = this.getOwnerComponent().getRouter();
+				let oRouter = this.getOwnerComponent().getRouter();
 				oRouter.navTo("overview", {}, true);
 			}
 		}

@@ -18,7 +18,7 @@ sap.ui.define([
             fetch('/api/Cliente').then((response) => {
                 return response.json();
             }).then((data) =>{
-                var oModel = new JSONModel(data);
+                let oModel = new JSONModel(data);
                 this.getView().setModel(oModel, "clientes");
                 MessageToast.show("Dados carregados com sucesso!");
 
@@ -30,25 +30,25 @@ sap.ui.define([
 
 		aoFiltrarClientes : function (oEvent) {
 
-			var aFilterNome = [];
-            var aFilterEmail = [];
-			var sQuery = oEvent.getParameter("query");
+			let aFilterNome = [];
+            let aFilterEmail = [];
+			let sQuery = oEvent.getParameter("query");
 			if (sQuery) {
 				aFilterNome.push(new Filter("nome", FilterOperator.Contains, sQuery));
 				aFilterEmail.push(new Filter("email", FilterOperator.Contains, sQuery));
 			}
             
-			var oList = this.byId("table");
-			var oBinding = oList.getBinding("items");
+			let oList = this.byId("table");
+			let oBinding = oList.getBinding("items");
 			oBinding.filter(aFilterNome);
 			oBinding.filter(aFilterEmail);
 		},
 
 		aoClicar: function (oEvent) {
 
-			var oItem = oEvent.getSource();
-			var lista = oItem.getBindingContext("clientes");
-			var oRouter = this.getOwnerComponent().getRouter();
+			let oItem = oEvent.getSource();
+			let lista = oItem.getBindingContext("clientes");
+			let oRouter = this.getOwnerComponent().getRouter();
 			let idObjetoSelecionado = lista.getProperty("id");
 			
 			oRouter.navTo("detalhes", {
@@ -57,7 +57,7 @@ sap.ui.define([
 		},
 
 		aoClicarEmNovo: function (oEvent) {
-			var oRouter = this.getOwnerComponent().getRouter();
+			let oRouter = this.getOwnerComponent().getRouter();
 			oRouter.navTo("formCriar");
 		}
 	});

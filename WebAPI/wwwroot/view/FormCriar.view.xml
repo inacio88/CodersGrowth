@@ -35,22 +35,48 @@
 			</f:toolbar>
 			<f:content>
 				<Label text="{i18n>CampoNome}" />
-				<Input value="{dadosFormularioCriar>/nome}"
-		            valueLiveUpdate="true" />
+				<Input value="{dadosFormularioCriar>/nome}" 
+					id="inputNome" 
+					name="inputNome"
+					valueState="None"
+		            valueLiveUpdate="true"
+					liveChange="aoMudarCampo"
+					fieldGroupIds="camposFormularios" />
 				
                 <Label text="{i18n>CampoEmail}" />
-				<Input value="{dadosFormularioCriar>/email}"
-		            valueLiveUpdate="true"/>
+				<Input value="{dadosFormularioCriar>/email}" 
+					id="inputEmail"
+					name="inputEmail"
+					valueState="None"
+					liveChange="aoMudarCampo"
+		            valueLiveUpdate="true"
+					fieldGroupIds="camposFormularios"/>
 				
 
-                <Label text="{i18n>CampoDataNascimento}" labelFor="DP2"/>
+                <Label text="{i18n>CampoDataNascimento}" labelFor="inputDataNascimento"/>
 				<DatePicker
-					id="DP2"
-					value="{path: 'dadosFormularioCriar>/dataNascimento', type: 'sap.ui.model.type.Date', formatOptions: {source: {pattern: 'yyyy-MM-ddTHH:mm:ss.mmm'}}}"
+					id="inputDataNascimento"
+					name="inputDataNascimento"
+					valueState="None"
+					change="aoMudarCampo"
+					class="sapUiSmallMarginBottom"
+					fieldGroupIds="camposFormularios"
+					value="{
+						'path': 'dadosFormularioCriar>/dataNascimento',
+						'type': 'sap.ui.model.type.Date',
+						'formatOptions': {
+							'pattern': 'dd/MM/y'
+						}
+					}"
                     />
 			    
                 <MaskInput value="{dadosFormularioCriar>/cpf}"
-                mask="999.999.999-99" placeholder="{i18n>CampoCpf}" showClearIcon="{/showClearIcon}">
+                mask="999.999.999-99" placeholder="{i18n>CampoCpf}" showClearIcon="{/showClearIcon}"
+				id="inputCpf"
+				name="inputCpf"
+				valueState="None"
+				change="aoMudarCampo"
+				fieldGroupIds="camposFormularios">
 				</MaskInput>
 
 	
