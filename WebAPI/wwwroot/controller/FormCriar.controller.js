@@ -75,7 +75,8 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
         }
 
         else if (oItem.getName() === "inputCpf") {
-            if (oItem.getValue().length === 14 ) {
+            const quantidadeCaracteresComMascara = 14;
+            if (oItem.getValue().length === quantidadeCaracteresComMascara ) {
                 let erros = this._validarCpf(oItem.getValue());
                 this._addMensagensErro(oItem, erros);   
             }
@@ -89,10 +90,10 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
 
     },
     _checarCamposValidados: function () {
-        let elementosComErro = document.getElementsByClassName("sapMInputBaseContentWrapperError");
+        const quantidadeDecamposCorretos = 4;
         let elementosComSucesso = document.getElementsByClassName("sapMInputBaseContentWrapperSuccess");
 
-        if (elementosComErro.length === 0 && elementosComSucesso.length == 4) {
+        if (elementosComSucesso.length == quantidadeDecamposCorretos) {
             return true;
         }
         else{
@@ -102,10 +103,11 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
     },
 
     _validarNome: function (nome) {
+        const quantidadeNulaCaracteres = 0;
         let erros = [];
         let formatoNome = /^[a-zA-ZÀ-ÖØ-öø-ÿ ]*$/;
         nome = nome.trim();
-        if (nome.length === 0) {
+        if (nome.length === quantidadeNulaCaracteres) {
             erros.push("Nome deve ter no mínimo 1 caractere");
         }
 
@@ -121,8 +123,6 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
         let formato = /^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$/;
         string_para_validar = string_para_validar.trim();
         
-
-       
         if (!string_para_validar.match(formato)){
             erros.push("Esse formato de email não é válido!");
         }
@@ -131,12 +131,18 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
     },
 
     _validarCpf: function (string_para_validar) {
+        const maximoTamanCaracteresRepetidos = 11;
         let strCPF = string_para_validar.replaceAll(".", "").replace("-", "").replace(" ", "");
         let erros = [];
-       
+        let expressaoRegular = new RegExp(`${strCPF[0]}`, 'g');
         let Soma;
         let Resto;
+        let tamanhoCaracteresRepetidos = (strCPF.match(expressaoRegular)||[]).length;
         Soma = 0;
+        
+        
+        if (tamanhoCaracteresRepetidos === maximoTamanCaracteresRepetidos)
+            erros.push("Esse formato de cpf não é válido!");
         
         for (let i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
         Resto = (Soma * 10) % 11;
@@ -147,18 +153,6 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
         Soma = 0;
         for (let i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
         Resto = (Soma * 10) % 11;
-
-        if (strCPF == "00000000000" ||
-            strCPF == "11111111111" ||
-            strCPF == "22222222222" ||
-            strCPF == "33333333333" ||
-            strCPF == "44444444444" ||
-            strCPF == "55555555555" ||
-            strCPF == "66666666666" ||
-            strCPF == "77777777777" ||
-            strCPF == "88888888888" ||
-            strCPF == "99999999999")
-            erros.push("Esse formato de cpf não é válido!");
 
         if ((Resto == 10) || (Resto == 11))  Resto = 0;
         if (Resto != parseInt(strCPF.substring(10, 11) ) ) erros.push("Esse formato de cpf não é válido!");
@@ -174,7 +168,7 @@ var PageController = Controller.extend("sap.ui.gerenciamento.cliente.controller.
         if (data_hoje.getFullYear() - data_validar.getFullYear() > 120) {
             erros.push("A idade máxima é 120 anos!");
         }
-        if (data_hoje.getFullYear() - data_validar.getFullYear() < 1) {
+        if (data_hoje.getFullYear() - data_validar.getFullYear() < 18) {
             erros.push("A idade mínima é 18 anos!"); 
         }
 
