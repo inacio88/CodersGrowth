@@ -73,7 +73,13 @@
 					"pattern": "formCriar",
 					"name": "formCriar",
 					"target": "formCriar"
+				},
+				{
+					"pattern": "formCriar/{clienteCaminho}",
+					"name": "formCriarEditar",
+					"target": "formCriar"
 				}
+				
 				
 			],
 			"targets": {
