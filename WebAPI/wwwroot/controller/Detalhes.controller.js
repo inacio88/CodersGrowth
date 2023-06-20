@@ -79,11 +79,9 @@ sap.ui.define([
 					icon: MessageBox.Icon.WARNING,
 					actions: [MessageBox.Action.YES, MessageBox.Action.NO], onClose: (acao) => {
 						if (acao == MessageBox.Action.YES) {
-							debugger
-							const id = this._remover(idCliente);
-							if(id){
-								this._navegar(ROTA_LISTA)
-							}
+							
+							this._remover(idCliente);
+			
 						}
 					}
 				})
@@ -98,13 +96,14 @@ sap.ui.define([
 			oRouter.navTo(rota);
 		},
 
-		_remover: async function (id) {
+		_remover: function (id) {
 			fetch(`/api/Cliente/${id}`, {
 				method: "DELETE",
 				headers: {"Content-type": "application/json; charset=UTF-8"}
 			})
 			.then(() =>{
                 MessageToast.show("Excluido com sucesso!");
+				this._navegar(ROTA_LISTA)
             }).catch(() =>{
                 MessageToast.show("Falha ao deletar.");
             });
