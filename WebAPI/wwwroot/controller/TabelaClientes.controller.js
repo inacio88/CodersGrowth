@@ -10,13 +10,11 @@ sap.ui.define([
 
 	return Controller.extend("sap.ui.gerenciamento.cliente.controller.TabelaClientes", {
         onInit: function () {
-
 			var oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("overview").attachPatternMatched(this.obterTodos, this);
         },
 
         obterTodos: function () {
-			
             fetch('/api/Cliente').then((response) => {
                 return response.json();
             }).then((data) =>{
@@ -61,6 +59,12 @@ sap.ui.define([
 		aoClicarEmNovo: function (oEvent) {
 			let oRouter = this.getOwnerComponent().getRouter();
 			oRouter.navTo("formCriar");
+		},
+
+		_destruirTabela: function () {
+			let tabela = document.getElementById('__xmlview0--table-listUl')
+			console.log(tabela);
+			tabela.children[1].remove();
 		}
 	});
 

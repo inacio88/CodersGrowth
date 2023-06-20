@@ -4,31 +4,36 @@ sap.ui.define([
 	"sap/m/MessageToast",
 	"sap/ui/core/routing/History",
     "sap/m/MessageBox",
-
-
-
 ], function (Controller, JSONModel, MessageToast, History, MessageBox) {
 	"use strict";
+	const ROTA_LISTA = "overview";
 	return Controller.extend("sap.ui.gerenciamento.cliente.controller.Detalhes", {
 
 		onInit: function () {
 			let oRouter = this.getOwnerComponent().getRouter();
 			oRouter.getRoute("detalhes").attachPatternMatched(this._onObjectMatched, this);
-            
 		},
 		
-		obterPorId: function (id) {
-            fetch(`/api/Cliente/${id}`).then((response) => {
-                return response.json();
-            }).then((data) =>{
-                let oModel = new JSONModel(data);
-                this.getView().setModel(oModel, "clienteSelecionado");
-                MessageToast.show("Dados carregados com sucesso!");
-
-            }).catch(() =>{
-                MessageToast.show("Falha ao obter os dados.");
-            });
-
+		_carregarCliente: function (id) {
+			fetch(`/api/Cliente/${id}`)
+				.then((response) => {
+					if (response.ok) {
+						return response.json();
+					}
+					MessageToast.show("Erro no servidor");
+					this._navegar(ROTA_LISTA);
+				})
+				.then((data) => {
+					if(data?.id){
+						let oModel = new JSONModel(data);
+						this.getView().setModel(oModel, "clienteSelecionado");
+						MessageToast.show("Dados carregados com sucesso!");
+					}
+				})
+				.catch((error) => {
+					MessageToast.show(error.toString());
+					this._navegar(ROTA_LISTA);
+				});
         },
 
 		_onObjectMatched: function (oEvent) {
@@ -37,7 +42,8 @@ sap.ui.define([
 				path: "/" + window.decodeURIComponent(oEvent.getParameter("arguments").clienteCaminho),
 				model: "clientes"
 			});
-			this.obterPorId(id);
+
+			this._carregarCliente(id);
 		},
 
 		aoclicarEmVoltar: function () {
@@ -65,23 +71,34 @@ sap.ui.define([
 		aoClicarEmExcluir: function () {
 			let dadosClienteSelecionado = this.getView().getModel("clienteSelecionado");
             let idCliente = dadosClienteSelecionado.getProperty("/id");
-			console.log(idCliente);
 
-            MessageBox.alert("Deseja mesmo exlcuir?", {
-                emphasizedAction: MessageBox.Action.YES,
-                initialFocus: MessageBox.Action.NO,
-                icon: MessageBox.Icon.WARNING,
-                actions: [MessageBox.Action.YES, MessageBox.Action.NO], onClose: (acao) => {
-                    if (acao == MessageBox.Action.YES) {
-                        this._remover(idCliente);
-						let oRouter = this.getOwnerComponent().getRouter();
-						oRouter.navTo("overview");
-                    }
-                }
-            })
+			if(idCliente){
+				MessageBox.alert("Deseja mesmo exlcuir?", {
+					emphasizedAction: MessageBox.Action.YES,
+					initialFocus: MessageBox.Action.NO,
+					icon: MessageBox.Icon.WARNING,
+					actions: [MessageBox.Action.YES, MessageBox.Action.NO], onClose: (acao) => {
+						if (acao == MessageBox.Action.YES) {
+							debugger
+							const id = this._remover(idCliente);
+							if(id){
+								this._navegar(ROTA_LISTA)
+							}
+						}
+					}
+				})
+			}else{
+				MessageToast.show("Erro ao encontrar o id do usuário!");
+				this._navegar(ROTA_LISTA);
+			}
         },
+		
+		_navegar: function(rota){
+			let oRouter = this.getOwnerComponent().getRouter();
+			oRouter.navTo(rota);
+		},
 
-		_remover: function (id) {
+		_remover: async function (id) {
 			fetch(`/api/Cliente/${id}`, {
 				method: "DELETE",
 				headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -92,6 +109,5 @@ sap.ui.define([
                 MessageToast.show("Falha ao deletar.");
             });
 		}
-
 	});
 });
