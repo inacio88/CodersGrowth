@@ -40,7 +40,7 @@
 					name="inputNome"
 					valueState="None"
 		            valueLiveUpdate="true"
-					liveChange="aoMudarCampo"
+					change="aoMudarCampo"
 					fieldGroupIds="camposFormularios" />
 				
                 <Label text="{i18n>CampoEmail}" />
@@ -48,7 +48,7 @@
 					id="inputEmail"
 					name="inputEmail"
 					valueState="None"
-					liveChange="aoMudarCampo"
+					change="aoMudarCampo"
 		            valueLiveUpdate="true"
 					fieldGroupIds="camposFormularios"/>
 				

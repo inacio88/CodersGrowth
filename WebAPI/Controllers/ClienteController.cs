@@ -92,7 +92,7 @@ namespace WebAPI.Controllers
                 pessoaAtualizada.Id = id;
                 _repositorioPessoa.AtualizarPessoa(pessoaAtualizada);
 
-                return Ok();
+                return Ok(pessoaAtualizada.Id);
             }
             catch (Exception ex)
             {

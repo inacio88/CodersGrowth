@@ -48,6 +48,16 @@ sap.ui.define([
 				let oRouter = this.getOwnerComponent().getRouter();
 				oRouter.navTo("overview", {}, true);
 			}
+		},
+
+		aoClicarEmEditar: function () {
+			let dadosFormularioCriar = this.getView().getModel("clienteSelecionado");
+			var idCliente = dadosFormularioCriar.getProperty("/id");
+			let oRouter = this.getOwnerComponent().getRouter();
+			
+			oRouter.navTo("formCriarEditar", {
+				clienteCaminho: window.encodeURIComponent(idCliente)
+			});
 		}
 
 	});
