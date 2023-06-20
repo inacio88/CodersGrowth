@@ -13,15 +13,15 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
         onInit: function (oEvent) {
             let oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("formCriarEditar").attachPatternMatched(this._onObjectMatched, this);
-                    
             this._iniciarCamposVazios();
         },
 
         _onObjectMatched: function (oEvent) {
             let id = oEvent.getParameter("arguments").clienteCaminho;
 
-            if(id){
+            if(id || this._checarSeVemDeDetalhes()){
                 this.obterPorId(id);
+                this._alterarEstadoCampos("Success");
             }
         },
 
@@ -45,7 +45,7 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
             .then(response => response.json())
             .then((cliente) => {
                 cliente.dataNascimento = new Date(cliente.dataNascimento);
-
+                
                 let oModel = new JSONModel(cliente);
                 this.getView().setModel(oModel, "dadosFormularioCriar");
                 MessageToast.show("Dados carregados com sucesso!");
@@ -78,21 +78,10 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
         },
         
         aoClicarEmSalvar: async function () {
-            let oHistory = History.getInstance();
-            let sPreviousHash = oHistory.getPreviousHash();
             let dadosFormularioCriar = this.getView().getModel("dadosFormularioCriar");
             let idCliente = dadosFormularioCriar.getProperty("/id");
-            let paginaAnteriorRef = `detalhes/${idCliente}`;
-
-            // if(sPreviousHash == paginaAnteriorRef){
-            //     //nevega pra tela inicial ou tenta carregar esse cara com o id digitado no url
-            //     return;
-            // }
-
-            //verifica esse cara aqui - sPreviousHash
-            debugger
-            console.log(idCliente);
-            if (1 == 1) {
+            
+            if (this._checarCamposValidados()) {
                 if (idCliente) {
                     this._atualizar(idCliente)
                         .then(resp => resp.json())
@@ -118,6 +107,23 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
             else{
                 MessageBox.error("Verifique novamente se todos os campos estão corretos!")
             }
+        },
+
+        _checarSeVemDeDetalhes: function () {
+            
+            let oHistory = History.getInstance();
+            let sPreviousHash = oHistory.getPreviousHash();
+            let dadosFormularioCriar = this.getView().getModel("dadosFormularioCriar");
+            let idCliente = dadosFormularioCriar.getProperty("/id");
+            let paginaAnteriorRef = `detalhes/${idCliente}`;
+            
+            if(sPreviousHash === paginaAnteriorRef){
+                return true;
+            }
+            else{
+                return false;
+            }
+
         },
         
         aoMudarCampo: function (oEvent) {
@@ -169,7 +175,8 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
             
         },
 
-        _limparCampos: function () {
+        _alterarEstadoCampos: function (estado) {
+        
             let campoNome = this.byId("inputNome");
             let campoEmail = this.byId("inputEmail");
             let campoCpf = this.byId("inputCpf");
@@ -177,17 +184,21 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
             let campos = [campoNome, campoEmail, campoCpf, campoDataNascimento];
             
             campos.forEach(campo => {
-                campo.setValue('');
-                campo.setValueState("None");
-            });
+                campo.setValueState(estado);
+                
+                if(estado==="None")
+                    campo.setValue('');
 
+            });
+    
         },
 
         aoclicarEmVoltar: function () {
+
             let oHistory = History.getInstance();
             let sPreviousHash = oHistory.getPreviousHash();
 
-            this._limparCampos();
+            this._alterarEstadoCampos("None");
             if (sPreviousHash !== undefined) {
                 window.history.go(-1);
             } else {
