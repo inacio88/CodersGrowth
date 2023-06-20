@@ -3,9 +3,11 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
 	"sap/m/MessageToast",
 	"sap/ui/core/routing/History",
+    "sap/m/MessageBox",
 
 
-], function (Controller, JSONModel, MessageToast, History) {
+
+], function (Controller, JSONModel, MessageToast, History, MessageBox) {
 	"use strict";
 	return Controller.extend("sap.ui.gerenciamento.cliente.controller.Detalhes", {
 
@@ -58,6 +60,37 @@ sap.ui.define([
 			oRouter.navTo("formCriarEditar", {
 				clienteCaminho: window.encodeURIComponent(idCliente)
 			});
+		},
+
+		aoClicarEmExcluir: function () {
+			let dadosClienteSelecionado = this.getView().getModel("clienteSelecionado");
+            let idCliente = dadosClienteSelecionado.getProperty("/id");
+			console.log(idCliente);
+
+            MessageBox.alert("Deseja mesmo exlcuir?", {
+                emphasizedAction: MessageBox.Action.YES,
+                initialFocus: MessageBox.Action.NO,
+                icon: MessageBox.Icon.WARNING,
+                actions: [MessageBox.Action.YES, MessageBox.Action.NO], onClose: (acao) => {
+                    if (acao == MessageBox.Action.YES) {
+                        this._remover(idCliente);
+						let oRouter = this.getOwnerComponent().getRouter();
+						oRouter.navTo("overview");
+                    }
+                }
+            })
+        },
+
+		_remover: function (id) {
+			fetch(`/api/Cliente/${id}`, {
+				method: "DELETE",
+				headers: {"Content-type": "application/json; charset=UTF-8"}
+			})
+			.then(() =>{
+                MessageToast.show("Excluido com sucesso!");
+            }).catch(() =>{
+                MessageToast.show("Falha ao deletar.");
+            });
 		}
 
 	});

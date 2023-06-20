@@ -10,11 +10,13 @@ sap.ui.define([
 
 	return Controller.extend("sap.ui.gerenciamento.cliente.controller.TabelaClientes", {
         onInit: function () {
-            this.obterTodos();
+
+			var oRouter = this.getOwnerComponent().getRouter();
+            oRouter.getRoute("overview").attachPatternMatched(this.obterTodos, this);
         },
 
         obterTodos: function () {
-
+			
             fetch('/api/Cliente').then((response) => {
                 return response.json();
             }).then((data) =>{

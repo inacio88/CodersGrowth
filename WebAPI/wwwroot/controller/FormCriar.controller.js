@@ -89,7 +89,7 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
                             MessageToast.show("Cadastro atualizado com sucesso!");
                             this._navegarParaDetalhes(id);
                     }).catch(() => {
-                        MessageToast.show("Deu ruim");
+                        MessageToast.show("Erro ao atualizar");
                     });
                 }
                 else{
