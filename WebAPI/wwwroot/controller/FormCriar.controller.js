@@ -21,7 +21,7 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
             let id = oEvent.getParameter("arguments").clienteCaminho;
 
             if(id || this._checarSeVemDeDetalhes()){
-                this.obterPorId(id);
+                this.obterPorId(id); 
                 this._alterarEstadoCampos("Success");
             }
         },
