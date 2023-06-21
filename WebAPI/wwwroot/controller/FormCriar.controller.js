@@ -13,14 +13,15 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
         onInit: function (oEvent) {
             let oRouter = this.getOwnerComponent().getRouter();
             oRouter.getRoute("formCriarEditar").attachPatternMatched(this._onObjectMatched, this);
-            this._iniciarCamposVazios();
+            oRouter.getRoute("formCriar").attachPatternMatched(this._iniciarCamposVazios, this);
+            
         },
 
         _onObjectMatched: function (oEvent) {
             let id = oEvent.getParameter("arguments").clienteCaminho;
 
             if(id || this._checarSeVemDeDetalhes()){
-                this.obterPorId(id);
+                this.obterPorId(id); 
                 this._alterarEstadoCampos("Success");
             }
         },
@@ -28,6 +29,7 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
         _iniciarCamposVazios: function () {
             let dataAtualMilisegundos = Date.now();
             let dataAtual = new Date(dataAtualMilisegundos);
+            this._alterarEstadoCampos("None");
             
             let oData = {
                 "nome": "",
@@ -35,7 +37,6 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
                 "cpf": "",
                 "dataNascimento": dataAtual,
             };    
-            
             let oModel = new JSONModel(oData);
             this.getView().setModel(oModel, "dadosFormularioCriar");
         },
@@ -56,7 +57,7 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
 
         },
 
-        _criar: async function () {
+        _criar: function () {
             let cliente = this.getView().getModel("dadosFormularioCriar").getData();
 
             return fetch('/api/Cliente', {
@@ -67,7 +68,7 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
             .catch(err => console.log(err));
         },
         
-        _atualizar: async function (idCliente) {
+        _atualizar: function (idCliente) {
             let cliente = this.getView().getModel("dadosFormularioCriar").getData();
 
             return fetch(`/api/Cliente/${idCliente}`, {
@@ -76,8 +77,8 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
                     headers: {"Content-type": "application/json; charset=UTF-8"}
             })
         },
-        
-        aoClicarEmSalvar: async function () {
+ 
+        aoClicarEmSalvar: function () {
             let dadosFormularioCriar = this.getView().getModel("dadosFormularioCriar");
             let idCliente = dadosFormularioCriar.getProperty("/id");
             
@@ -151,13 +152,18 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
                 let erros = Validacao.__validarDataNascimento(oItem.getValue())
                 Validacao._addMensagensErro(oItem, erros);
             }
-
-
+            
         },
 
         _checarCamposValidados: function () {
             const quantidadeDecamposCorretos = 4;
+            const quantidadeNula = 0;
             let elementosComSucesso = document.getElementsByClassName("sapMInputBaseContentWrapperSuccess");
+            let elementosComErro = document.getElementsByClassName("sapMInputBaseContentWrapperError");
+
+            if (elementosComErro.length == quantidadeNula && elementosComSucesso.length == 0) {
+                this._alterarEstadoCampos('Error');
+            }
 
             if (elementosComSucesso.length == quantidadeDecamposCorretos) {
                 return true;
@@ -175,8 +181,18 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
             
         },
 
+        _navegar: function(rota){
+			let oRouter = this.getOwnerComponent().getRouter();
+			oRouter.navTo(rota);
+		},
+
+		aoClicarEmPaginaInicial: function () {
+            const rotaPaginaInicial = "overview";
+            this._alterarEstadoCampos('None');
+            this._navegar(rotaPaginaInicial);
+        },
+
         _alterarEstadoCampos: function (estado) {
-        
             let campoNome = this.byId("inputNome");
             let campoEmail = this.byId("inputEmail");
             let campoCpf = this.byId("inputCpf");
@@ -188,6 +204,9 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
                 
                 if(estado==="None")
                     campo.setValue('');
+
+                if(estado==="Error" && campo !== campoDataNascimento)
+                    campo.setValueStateText("Esse campo não pode ser vazio");
 
             });
     
