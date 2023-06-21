@@ -29,8 +29,9 @@
                     <ToolbarSpacer/>
 					<Title id="TituloFormulario" text="{i18n>TituloFormulario}"/>
 					<ToolbarSpacer />
-					<Button icon="sap-icon://save" press="aoClicarEmSalvar" />
-					<Button icon="sap-icon://cancel" press="aoclicarEmVoltar" />
+					<Button text="Página inicial" icon="sap-icon://home" press="aoClicarEmPaginaInicial" />
+					<Button text="salvar" icon="sap-icon://save" press="aoClicarEmSalvar" />
+					<Button text="cancelar" icon="sap-icon://cancel" press="aoclicarEmVoltar" />
 				</Toolbar>
 			</f:toolbar>
 			<f:content>

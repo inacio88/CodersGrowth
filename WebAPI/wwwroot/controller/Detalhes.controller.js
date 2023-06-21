@@ -96,6 +96,11 @@ sap.ui.define([
 			oRouter.navTo(rota);
 		},
 
+		aoClicarEmPaginaInicial: function () {
+            const rotaPaginaInicial = "overview";
+            this._navegar(rotaPaginaInicial);
+        },
+
 		_remover: function (id) {
 			fetch(`/api/Cliente/${id}`, {
 				method: "DELETE",

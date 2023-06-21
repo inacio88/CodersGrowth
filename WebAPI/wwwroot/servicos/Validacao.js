@@ -30,6 +30,10 @@ sap.ui.define([
             erros.push("Esse formato de email não é válido!");
         }
 
+        if (string_para_validar.length == 0)
+            erros.push("Esse campo não pode ser vazio");
+        
+
         return erros;
     },
 
@@ -43,6 +47,8 @@ sap.ui.define([
         let tamanhoCaracteresRepetidos = (strCPF.match(expressaoRegular)||[]).length;
         Soma = 0;
         
+        if (strCPF.length == 0)
+            erros.push("Esse campo não pode ser vazio");
         
         if (tamanhoCaracteresRepetidos === maximoTamanCaracteresRepetidos)
             erros.push("Esse formato de cpf não é válido!");
@@ -63,10 +69,13 @@ sap.ui.define([
 
     },
 
-    __validarDataNascimento: function (data_validar) {
+    __validarDataNascimento: function (data_validar_string) {
         let erros = [];
-        data_validar = new Date(data_validar);
+        let data_validar = new Date(data_validar_string);
         let data_hoje = new Date(Date.now());
+
+        if (data_validar_string.length == 0)
+            erros.push("Esse campo não pode ser vazio");
 
         if (data_hoje.getFullYear() - data_validar.getFullYear() > 120) {
             erros.push("A idade máxima é 120 anos!");

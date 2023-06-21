@@ -13,6 +13,7 @@
                             <m:contentRight>
                                 <m:Button icon="sap-icon://nav-back" press="aoclicarEmVoltar" />
                                 <m:ToolbarSpacer/> 
+            					<m:Button text="Página inicial" icon="sap-icon://home" press="aoClicarEmPaginaInicial" />
                                 <m:Button icon="sap-icon://request" text="{i18n>detalhesBtnEditar}" press="aoClicarEmEditar" />                                                                
                                <m:Button icon="sap-icon://delete" text="{i18n>detalhesBtnExcluir}" press="aoClicarEmExcluir" />
                             </m:contentRight>
