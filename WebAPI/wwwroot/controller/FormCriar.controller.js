@@ -29,6 +29,7 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
         _iniciarCamposVazios: function () {
             let dataAtualMilisegundos = Date.now();
             let dataAtual = new Date(dataAtualMilisegundos);
+            this._alterarEstadoCampos("None");
             
             let oData = {
                 "nome": "",
@@ -36,7 +37,6 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
                 "cpf": "",
                 "dataNascimento": dataAtual,
             };    
-            
             let oModel = new JSONModel(oData);
             this.getView().setModel(oModel, "dadosFormularioCriar");
         },
