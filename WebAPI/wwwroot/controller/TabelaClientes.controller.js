@@ -61,11 +61,6 @@ sap.ui.define([
 			oRouter.navTo("formCriar");
 		},
 
-		_destruirTabela: function () {
-			let tabela = document.getElementById('__xmlview0--table-listUl')
-			console.log(tabela);
-			tabela.children[1].remove();
-		}
 	});
 
 });
