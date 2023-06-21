@@ -1,0 +1,88 @@
+<mvc:View
+	controllerName="sap.ui.gerenciamento.cliente.controller.FormCriar"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="FormularioCliente"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			labelSpanXL="4"
+			labelSpanL="3"
+			labelSpanM="4"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="0"
+			emptySpanL="4"
+			emptySpanM="0"
+			emptySpanS="0"
+			columnsXL="2"
+			columnsL="1"
+			columnsM="1"
+			singleContainerFullSize="false"
+			ariaLabelledBy="TituloFormulario" >
+			<f:toolbar>
+				<Toolbar id="TB1">
+					<Button icon="sap-icon://nav-back" press="aoclicarEmVoltar" />
+                    <ToolbarSpacer/>
+					<Title id="TituloFormulario" text="{i18n>TituloFormulario}"/>
+					<ToolbarSpacer />
+					<Button text="{i18n>BtnPaginaInicial}" icon="sap-icon://home" press="aoClicarEmPaginaInicial" />
+					<Button text="{i18n>BtnSalvar}" icon="sap-icon://save" press="aoClicarEmSalvar" />
+					<Button text="{i18n>BtnCancelar}" icon="sap-icon://cancel" press="aoclicarEmVoltar" />
+				</Toolbar>
+			</f:toolbar>
+			<f:content>
+				<Label text="{i18n>CampoNome}" />
+				<Input value="{dadosFormularioCriar>/nome}" 
+					id="inputNome" 
+					name="inputNome"
+					valueState="None"
+		            valueLiveUpdate="true"
+					change="aoMudarCampo"
+					fieldGroupIds="camposFormularios" />
+				
+                <Label text="{i18n>CampoEmail}" />
+				<Input value="{dadosFormularioCriar>/email}" 
+					id="inputEmail"
+					name="inputEmail"
+					valueState="None"
+					change="aoMudarCampo"
+		            valueLiveUpdate="true"
+					fieldGroupIds="camposFormularios"/>
+				
+
+                <Label text="{i18n>CampoDataNascimento}" labelFor="inputDataNascimento"/>
+				<DatePicker
+					id="inputDataNascimento"
+					name="inputDataNascimento"
+					valueState="None"
+					change="aoMudarCampo"
+					class="sapUiSmallMarginBottom"
+					fieldGroupIds="camposFormularios"
+					value="{
+						'path': 'dadosFormularioCriar>/dataNascimento',
+						'type': 'sap.ui.model.type.Date',
+						'formatOptions': {
+							'pattern': 'dd/MM/y'
+						}
+					}"
+                    />
+			    
+                <MaskInput value="{dadosFormularioCriar>/cpf}"
+                mask="999.999.999-99" placeholder="{i18n>CampoCpf}" showClearIcon="{/showClearIcon}"
+				id="inputCpf"
+				name="inputCpf"
+				valueState="None"
+				change="aoMudarCampo"
+				fieldGroupIds="camposFormularios">
+				</MaskInput>
+
+	
+				
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+</mvc:View>

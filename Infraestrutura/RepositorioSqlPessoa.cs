@@ -51,7 +51,7 @@ namespace Infraestrutura
             }
         }
 
-        public void CriarPessoa(Pessoa pessoa)
+        public int CriarPessoa(Pessoa pessoa)
         {
             try{ 
                 sqlConexao.Open();
@@ -63,6 +63,7 @@ namespace Infraestrutura
                 comando.Parameters.AddWithValue("@DataNascimento", pessoa.DataNascimento);
                 comando.Parameters.AddWithValue("@CPF", pessoa.Cpf);
                 comando.ExecuteNonQuery();
+                return pessoa.Id;
             }
             catch (Exception ex)
             {
@@ -72,7 +73,6 @@ namespace Infraestrutura
             {
                 sqlConexao.Close();
             }
-
         }
         public void RemoverPessoa(int Id)
         {

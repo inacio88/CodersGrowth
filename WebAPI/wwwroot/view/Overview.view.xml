@@ -1,0 +1,18 @@
+<mvc:View
+	controllerName="sap.ui.gerenciamento.cliente.controller.App"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+
+	<Shell>
+		<App class="myAppDemoWT">
+			<pages>
+				<Page title="{i18n>homePageTitle}">
+					<content>
+						<mvc:XMLView viewName="sap.ui.gerenciamento.cliente.view.TabelaClientes"/>
+					</content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+
+</mvc:View>

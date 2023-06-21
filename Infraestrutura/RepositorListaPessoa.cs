@@ -17,16 +17,19 @@ namespace Infraestrutura
             return listaDePessoas;
         }
 
-        public void CriarPessoa(Pessoa pessoa)
+        public int CriarPessoa(Pessoa pessoa)
         {
             listaDePessoas.Add(pessoa);
+            return pessoa.Id;
         }
+
         public void RemoverPessoa(int Id)
         {
             var pessoa = ObterPessoaPorId(Id);
 
             listaDePessoas.Remove(pessoa);
         }
+
         public Pessoa ObterPessoaPorId(int Id)
         {
             var pessoaBuscada = listaDePessoas.Find(x => x.Id == Id);
@@ -41,6 +44,7 @@ namespace Infraestrutura
             pessoaBuscada = pessoa;
 
         }
+
         public bool ObterPessoaPorCpf(string Cpf, int Id)
         {
             return false;

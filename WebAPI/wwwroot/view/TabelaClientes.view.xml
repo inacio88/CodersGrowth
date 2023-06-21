@@ -1,0 +1,62 @@
+<mvc:View
+	controllerName="sap.ui.gerenciamento.cliente.controller.TabelaClientes"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc">
+
+		<Table
+					id="table"
+					width="auto"
+					class="sapUiResponsiveMargin"
+					growing="true"
+					items="{clientes>/}">
+				
+				<headerToolbar>
+					<Toolbar>
+						<Label id="tableHeader" text="{i18n>tabelaClientesTitulo}"/>
+						
+						<ToolbarSpacer/>
+
+						<SearchField width="40%" class="sapUiSmallMargin" placeholder="Buscar" search=".aoFiltrarClientes"/>
+
+						<ToolbarSpacer/>
+
+                        <Button text="{i18n>BtnCadastroNovo}" icon="sap-icon://add-employee" press="aoClicarEmNovo" class="sapUiSmallMarginEnd" type="Emphasized"/>
+					</Toolbar>
+				</headerToolbar>
+
+				<columns>
+					<Column width="33%" id="nomeColuna" vAlign="Middle">
+						<Text text="{i18n>TabelaNomeColunaTitulo}" id="nomeColunaTitulo"/>
+					</Column>
+
+					<Column width="33%" id="emailColuna" vAlign="Middle">
+						<Text text="{i18n>TabelaEmailColunaTitulo}" id="emailColunaTitulo"/>
+					</Column>
+
+					<Column width="33%" id="dataNascimentoColuna" vAlign="Middle">
+						<Text text="{i18n>TabelaDataNascimentoColunaTitulo}" id="dataNascimentoColunaTitulo"/>
+					</Column>
+
+					<Column width="33%" id="cpfColuna" vAlign="Middle">
+						<Text text="{i18n>TabelaCpfColunaTitulo}" id="cpfColunaTitulo"/>
+					</Column>
+
+				</columns>
+				<items>
+					<ColumnListItem vAlign="Middle" type="Navigation" press="aoClicar">
+						<cells>
+							<ObjectIdentifier
+									title="{clientes>nome}"/>
+							<Text
+									text="{clientes>email}"/>
+							<Text
+									text="{path : 'clientes>dataNascimento', type : 'sap.ui.model.type.Date', formatOptions: {style : 'medium', source: {pattern: 'yyyy-MM-ddTHH:mm:ss.mmm'}}}"/>
+							<Text
+									text="{clientes>cpf}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+
+
+</mvc:View>

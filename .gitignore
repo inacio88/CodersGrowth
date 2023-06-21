@@ -42,3 +42,13 @@ build/
 *.ncrunch*
 *.dotCover
 *.docstates
+
+
+Dominio/Properties/launchSettings.json
+GerenciamentoClientes/Properties/launchSettings.json
+Infraestrutura/Properties/launchSettings.json
+
+WebAPI/Properties/launchSettings.json
+WebAPI/appsettings.Development.json
+WebAPI/appsettings.json
+WebAPI/wwwroot/.vscode/settings.json
