@@ -4,9 +4,11 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
     "sap/m/MessageToast",
     "sap/m/MessageBox",
-    "../servicos/Validacao"
+    "../servicos/Validacao",
+	"sap/ui/core/BusyIndicator"
 
-], function(Controller, JSONModel, History, MessageToast, MessageBox, Validacao) {
+
+], function(Controller, JSONModel, History, MessageToast, MessageBox, Validacao, BusyIndicator) {
 "use strict";
 
 return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
@@ -42,6 +44,7 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
         },
 
         obterPorId: function (id) {
+			BusyIndicator.show();
             fetch(`/api/Cliente/${id}`)
             .then(response => response.json())
             .then((cliente) => {
@@ -53,19 +56,24 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
 
             }).catch(() =>{
                 MessageToast.show("Falha ao obter os dados.");
+            }).finally(()=>{
+                BusyIndicator.hide();
             });
 
         },
 
         _criar: function () {
+			BusyIndicator.show();
             let cliente = this.getView().getModel("dadosFormularioCriar").getData();
-
             return fetch('/api/Cliente', {
                     method: "POST",
                     body: JSON.stringify(cliente),
                     headers: {"Content-type": "application/json; charset=UTF-8"}
             })
-            .catch(err => console.log(err));
+            .catch(err => console.log(err))
+            .finally(()=>{
+                BusyIndicator.hide();
+            });
         },
         
         _atualizar: function (idCliente) {
@@ -83,6 +91,8 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
             let idCliente = dadosFormularioCriar.getProperty("/id");
             
             if (this._checarCamposValidados()) {
+    			BusyIndicator.show();
+
                 if (idCliente) {
                     this._atualizar(idCliente)
                         .then(resp => resp.json())
@@ -91,6 +101,8 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
                             this._navegarParaDetalhes(id);
                     }).catch(() => {
                         MessageToast.show("Erro ao atualizar");
+                    }).finally(()=>{
+                        BusyIndicator.hide();
                     });
                 }
                 else{
@@ -101,6 +113,8 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
                             this._navegarParaDetalhes(id);
                         }).catch(() => {
                             MessageToast.show("Erro ao cadastrar");
+                    }).finally(()=>{
+                        BusyIndicator.hide();
                     });
                 }
                 
@@ -175,15 +189,19 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
         },
         
         _navegarParaDetalhes: function(id){
+    		BusyIndicator.show();
             const rotaDetalhes = "detalhes";
             let oRouter = this.getOwnerComponent().getRouter();
             oRouter.navTo(rotaDetalhes, {clienteCaminho: window.encodeURIComponent(id)});
+            BusyIndicator.hide();
             
         },
 
         _navegar: function(rota){
+    		BusyIndicator.show();
 			let oRouter = this.getOwnerComponent().getRouter();
 			oRouter.navTo(rota);
+            BusyIndicator.hide();
 		},
 
 		aoClicarEmPaginaInicial: function () {
@@ -213,7 +231,7 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
         },
 
         aoclicarEmVoltar: function () {
-
+    		BusyIndicator.show();
             let oHistory = History.getInstance();
             let sPreviousHash = oHistory.getPreviousHash();
 
@@ -224,6 +242,8 @@ return Controller.extend("sap.ui.gerenciamento.cliente.controller.FormCriar", {
                 let oRouter = this.getOwnerComponent().getRouter();
                 oRouter.navTo("overview", {}, true);
             }
+            BusyIndicator.hide();
+
         }
     });
 });
