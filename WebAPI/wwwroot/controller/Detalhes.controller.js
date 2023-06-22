@@ -4,7 +4,9 @@ sap.ui.define([
 	"sap/m/MessageToast",
 	"sap/ui/core/routing/History",
     "sap/m/MessageBox",
-], function (Controller, JSONModel, MessageToast, History, MessageBox) {
+	"sap/ui/core/BusyIndicator"
+
+], function (Controller, JSONModel, MessageToast, History, MessageBox, BusyIndicator) {
 	"use strict";
 	const ROTA_LISTA = "overview";
 	return Controller.extend("sap.ui.gerenciamento.cliente.controller.Detalhes", {
@@ -15,6 +17,7 @@ sap.ui.define([
 		},
 		
 		_carregarCliente: function (id) {
+			BusyIndicator.show();
 			fetch(`/api/Cliente/${id}`)
 				.then((response) => {
 					if (response.ok) {
@@ -33,7 +36,10 @@ sap.ui.define([
 				.catch((error) => {
 					MessageToast.show(error.toString());
 					this._navegar(ROTA_LISTA);
+				}).finally(()=>{
+					BusyIndicator.hide();
 				});
+
         },
 
 		_onObjectMatched: function (oEvent) {
@@ -47,6 +53,7 @@ sap.ui.define([
 		},
 
 		aoclicarEmVoltar: function () {
+			BusyIndicator.show();
 			let oHistory = History.getInstance();
 			let sPreviousHash = oHistory.getPreviousHash();
 
@@ -56,9 +63,11 @@ sap.ui.define([
 				let oRouter = this.getOwnerComponent().getRouter();
 				oRouter.navTo("overview", {}, true);
 			}
+			BusyIndicator.hide();
 		},
 
 		aoClicarEmEditar: function () {
+			BusyIndicator.show();
 			let dadosFormularioCriar = this.getView().getModel("clienteSelecionado");
 			var idCliente = dadosFormularioCriar.getProperty("/id");
 			let oRouter = this.getOwnerComponent().getRouter();
@@ -66,6 +75,7 @@ sap.ui.define([
 			oRouter.navTo("formCriarEditar", {
 				clienteCaminho: window.encodeURIComponent(idCliente)
 			});
+			BusyIndicator.hide();
 		},
 
 		aoClicarEmExcluir: function () {
@@ -102,6 +112,7 @@ sap.ui.define([
         },
 
 		_remover: function (id) {
+			BusyIndicator.show();
 			fetch(`/api/Cliente/${id}`, {
 				method: "DELETE",
 				headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -111,7 +122,9 @@ sap.ui.define([
 				this._navegar(ROTA_LISTA)
             }).catch(() =>{
                 MessageToast.show("Falha ao deletar.");
-            });
+            }).finally(()=>{
+				BusyIndicator.hide();
+			});
 		}
 	});
 });

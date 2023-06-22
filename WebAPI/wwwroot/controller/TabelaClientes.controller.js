@@ -3,9 +3,10 @@ sap.ui.define([
 	"sap/m/MessageToast",
     "sap/ui/model/json/JSONModel",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
+	"sap/ui/model/FilterOperator",
+	"sap/ui/core/BusyIndicator"
 
-], function (Controller, MessageToast, JSONModel, Filter, FilterOperator) {
+], function (Controller, MessageToast, JSONModel, Filter, FilterOperator, BusyIndicator) {
 	"use strict";
 
 	return Controller.extend("sap.ui.gerenciamento.cliente.controller.TabelaClientes", {
@@ -15,6 +16,7 @@ sap.ui.define([
         },
 
         obterTodos: function () {
+			BusyIndicator.show();
             fetch('/api/Cliente').then((response) => {
                 return response.json();
             }).then((data) =>{
@@ -24,7 +26,9 @@ sap.ui.define([
 
             }).catch(() =>{
                 MessageToast.show("Falha ao obter os dados.");
-            });
+            }).finally(()=>{
+				BusyIndicator.hide();
+			});
 
         },
 
@@ -45,7 +49,7 @@ sap.ui.define([
 		},
 
 		aoClicar: function (oEvent) {
-
+			BusyIndicator.show();
 			let oItem = oEvent.getSource();
 			let lista = oItem.getBindingContext("clientes");
 			let oRouter = this.getOwnerComponent().getRouter();
@@ -54,11 +58,14 @@ sap.ui.define([
 			oRouter.navTo("detalhes", {
 				clienteCaminho: window.encodeURIComponent(idObjetoSelecionado)
 			});
+			BusyIndicator.hide();
 		},
 
 		aoClicarEmNovo: function (oEvent) {
+			BusyIndicator.show();
 			let oRouter = this.getOwnerComponent().getRouter();
 			oRouter.navTo("formCriar");
+			BusyIndicator.hide();
 		},
 
 	});
