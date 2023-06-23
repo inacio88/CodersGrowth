@@ -56,7 +56,11 @@
 				"viewType": "XML",
 				"path": "sap.ui.gerenciamento.cliente.view",
 				"controlId": "app",
-				"controlAggregation": "pages"
+				"controlAggregation": "pages",
+				"transition": "flip",
+				"bypassed": {
+					"target": "notFound"
+				 }
 			},
 			"routes": [
 				{
@@ -96,6 +100,12 @@
 				"formCriar": {
 				  "id": "formCriar",
 				  "name": "FormCriar"
+				},
+				
+				"notFound": {
+				   "id": "notFound",
+				   "name": "NotFound",
+				   "transition": "show"
 				}
 				
 			}
